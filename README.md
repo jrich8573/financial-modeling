@@ -78,11 +78,52 @@ npm run build    # output in web/dist/
 npm run preview  # preview locally
 ```
 
+## Docker
+
+The entire stack runs via Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+This starts three services:
+
+| Service | Description | Port |
+|---------|-------------|------|
+| `db` | PostgreSQL 17 (Alpine) | 5432 |
+| `backend` | Rust CLI — fetches data, runs models, writes JSON + DB | — |
+| `web` | Vite/React frontend served via nginx | 8080 |
+
+The backend generates `data.json` and `dfa_data.json` into a shared volume, which nginx serves to the frontend. PostgreSQL stores the analysis results for querying.
+
+## CI/CD
+
+A GitHub Actions workflow (`.github/workflows/deploy-containers.yml`) automatically builds and pushes container images on every push to `main`:
+
+| Image | Registry |
+|-------|----------|
+| Backend | `ghcr.io/jrich8573/financial-modeling/backend:latest` |
+| Web | `ghcr.io/jrich8573/financial-modeling/web:latest` |
+
+Each image is also tagged with the commit SHA. The workflow can be triggered manually via `workflow_dispatch`.
+
+To pull and run the published images:
+
+```bash
+docker pull ghcr.io/jrich8573/financial-modeling/backend:latest
+docker pull ghcr.io/jrich8573/financial-modeling/web:latest
+```
+
 ## Project Structure
 
 ```
 financial-models/
 ├── Cargo.toml
+├── Dockerfile               # Multi-stage Rust backend image
+├── docker-compose.yml       # Full stack: db + backend + web
+├── .github/
+│   └── workflows/
+│       └── deploy-containers.yml  # CI: build & push to GHCR
 ├── src/
 │   ├── main.rs          # Entry point, orchestration, table output, JSON export
 │   ├── types.rs         # Shared data structures
@@ -91,8 +132,11 @@ financial-models/
 │   ├── stock_data.rs    # Fetches historical daily prices from Yahoo Finance
 │   ├── factors.rs       # Downloads and parses Fama-French factor data
 │   ├── regression.rs    # OLS regression using nalgebra
+│   ├── db.rs            # PostgreSQL persistence
 │   └── models.rs        # CAPM and FF6 model computation
 └── web/
+    ├── Dockerfile           # Multi-stage Node + nginx image
+    ├── nginx.conf           # Serves frontend + JSON data
     ├── package.json
     ├── index.html
     ├── public/
