@@ -435,3 +435,193 @@ td.numeric {
   color: var(--accent-blue);
   white-space: nowrap;
 }
+
+/* Regression Analysis Tab */
+
+.expandable-row {
+  cursor: pointer;
+}
+
+.expandable-row:hover {
+  background: var(--bg-row-hover) !important;
+}
+
+.expandable-row.expanded {
+  background: var(--bg-table-header);
+}
+
+.expand-icon {
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  margin-right: 0.25rem;
+}
+
+.detail-row td {
+  padding: 0 !important;
+  background: var(--bg) !important;
+}
+
+.regression-detail {
+  padding: 1.25rem;
+}
+
+.ratio-cards {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.ratio-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  min-width: 140px;
+}
+
+.ratio-card .label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.ratio-card .value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.model-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.model-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+
+.model-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-bottom: 0.75rem;
+}
+
+.model-section {
+  margin-bottom: 0.75rem;
+}
+
+.model-section h4 {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.coeff-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.coeff-table thead th {
+  background: var(--bg);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+  cursor: default;
+  position: static;
+}
+
+.coeff-table thead th:hover {
+  color: var(--text-muted);
+}
+
+.coeff-table tbody td {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid rgba(42, 46, 62, 0.5);
+}
+
+.coeff-table .predictor-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.coeff-table .numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.model-stats-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.model-fit, .model-anova {
+  flex: 1;
+  min-width: 200px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 1rem;
+  font-size: 0.8rem;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.stat-val {
+  text-align: right;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.sig-stars {
+  font-weight: 700;
+  text-align: center;
+  min-width: 2rem;
+}
+
+.p-sig-001 {
+  color: var(--accent-green);
+  font-weight: 700;
+}
+
+.p-sig-005 {
+  color: var(--accent-green);
+}
+
+.p-sig-010 {
+  color: var(--accent-yellow);
+}
+
+.p-insig {
+  color: var(--text-muted);
+}
+
+.sig-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  justify-content: flex-end;
+}

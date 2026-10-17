@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import type { StockAnalysis } from "./types";
+import type { StockAnalysis, DetailedRegressionResult } from "./types";
 import "./App.css";
 
 type Page = "sp500" | "dfa";
-type Tab = "summary" | "capm" | "ff6" | "dictionary";
+type Tab = "summary" | "capm" | "ff6" | "regression" | "dictionary";
 type SortDir = "asc" | "desc";
 interface SortState {
   key: string;
@@ -42,6 +42,20 @@ function TickerCell({ ticker, company }: { ticker: string; company: string }) {
   );
 }
 
+function sigStars(p: number): string {
+  if (p < 0.01) return "***";
+  if (p < 0.05) return "**";
+  if (p < 0.10) return "*";
+  return "";
+}
+
+function pSigClass(p: number): string {
+  if (p < 0.01) return "p-sig-001";
+  if (p < 0.05) return "p-sig-005";
+  if (p < 0.10) return "p-sig-010";
+  return "p-insig";
+}
+
 function getValue(stock: StockAnalysis, key: string): string | number {
   switch (key) {
     case "ticker":      return stock.info.ticker;
@@ -63,6 +77,10 @@ function getValue(stock: StockAnalysis, key: string): string | number {
     case "ff6_r2":      return stock.ff6.r_squared;
     case "ann_return":  return stock.annualized_return;
     case "ann_std":     return stock.annualized_std_dev;
+    case "sharpe":      return stock.regression_detail?.ratios?.sharpe_ratio ?? 0;
+    case "info_ratio":  return stock.regression_detail?.ratios?.information_ratio ?? 0;
+    case "capm_adj_r2": return stock.regression_detail?.capm?.adj_r_squared ?? 0;
+    case "ff6_adj_r2":  return stock.regression_detail?.ff6?.adj_r_squared ?? 0;
     default:            return "";
   }
 }
@@ -147,6 +165,7 @@ function AnalysisView({
   const [search, setSearch] = useState("");
   const [sectorFilter, setSectorFilter] = useState("all");
   const [sort, setSort] = useState<SortState>({ key: "ticker", dir: "asc" });
+  const [expandedTicker, setExpandedTicker] = useState<string | null>(null);
 
   const sectors = useMemo(() => {
     if (!data) return [];
@@ -271,6 +290,9 @@ function AnalysisView({
         <button className={`tab ${tab === "ff6" ? "active" : ""}`} onClick={() => setTab("ff6")}>
           Fama-French 6-Factor
         </button>
+        <button className={`tab ${tab === "regression" ? "active" : ""}`} onClick={() => setTab("regression")}>
+          Regression Analysis
+        </button>
         <button className={`tab ${tab === "dictionary" ? "active" : ""}`} onClick={() => setTab("dictionary")}>
           Data Dictionary
         </button>
@@ -392,10 +414,159 @@ function AnalysisView({
                 </tbody>
               </table>
             )}
+
+            {tab === "regression" && (
+              <table>
+                <thead>
+                  <tr>
+                    <th className={thClass("ticker")} onClick={() => handleSort("ticker")}>Ticker <SortArrow col="ticker" /></th>
+                    <th className={thClass("company")} onClick={() => handleSort("company")}>{itemLabel === "funds" ? "Fund Name" : "Company"} <SortArrow col="company" /></th>
+                    <th className={thClass("sharpe")} onClick={() => handleSort("sharpe")}>Sharpe <SortArrow col="sharpe" /></th>
+                    <th className={thClass("info_ratio")} onClick={() => handleSort("info_ratio")}>Info Ratio <SortArrow col="info_ratio" /></th>
+                    <th className={thClass("capm_r2")} onClick={() => handleSort("capm_r2")}>CAPM R² <SortArrow col="capm_r2" /></th>
+                    <th className={thClass("capm_adj_r2")} onClick={() => handleSort("capm_adj_r2")}>CAPM Adj R² <SortArrow col="capm_adj_r2" /></th>
+                    <th className={thClass("ff6_r2")} onClick={() => handleSort("ff6_r2")}>FF6 R² <SortArrow col="ff6_r2" /></th>
+                    <th className={thClass("ff6_adj_r2")} onClick={() => handleSort("ff6_adj_r2")}>FF6 Adj R² <SortArrow col="ff6_adj_r2" /></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((s) => {
+                    const rd = s.regression_detail;
+                    const isExpanded = expandedTicker === s.info.ticker;
+                    return (
+                      <>
+                        <tr
+                          key={s.info.ticker}
+                          className={`expandable-row ${isExpanded ? "expanded" : ""}`}
+                          onClick={() => setExpandedTicker(isExpanded ? null : s.info.ticker)}
+                        >
+                          <td className="ticker">
+                            <span className="expand-icon">{isExpanded ? "\u25BC" : "\u25B6"}</span>
+                            {" "}{s.info.ticker}
+                          </td>
+                          <td className="company">{s.info.company}</td>
+                          <td className={`numeric ${colorClass(rd?.ratios?.sharpe_ratio ?? 0)}`}>{num(rd?.ratios?.sharpe_ratio ?? 0, 2)}</td>
+                          <td className={`numeric ${colorClass(rd?.ratios?.information_ratio ?? 0)}`}>{num(rd?.ratios?.information_ratio ?? 0, 2)}</td>
+                          <td className="numeric">{num(s.capm.r_squared)}</td>
+                          <td className="numeric">{num(rd?.capm?.adj_r_squared ?? 0)}</td>
+                          <td className="numeric">{num(s.ff6.r_squared)}</td>
+                          <td className="numeric">{num(rd?.ff6?.adj_r_squared ?? 0)}</td>
+                        </tr>
+                        {isExpanded && rd && (
+                          <tr key={s.info.ticker + "-detail"} className="detail-row">
+                            <td colSpan={8}>
+                              <RegressionDetailPanel detail={rd} />
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
         </>
       )}
     </>
+  );
+}
+
+function ModelCard({ model }: { model: DetailedRegressionResult }) {
+  return (
+    <div className="model-card">
+      <h3>{model.model_name}</h3>
+
+      <div className="model-section">
+        <h4>Coefficients</h4>
+        <table className="coeff-table">
+          <thead>
+            <tr>
+              <th>Predictor</th>
+              <th>Coefficient</th>
+              <th>Std Error</th>
+              <th>t-Statistic</th>
+              <th>p-Value</th>
+              <th>Sig</th>
+            </tr>
+          </thead>
+          <tbody>
+            {model.coefficients.map((c) => (
+              <tr key={c.name}>
+                <td className="predictor-name">{c.name}</td>
+                <td className="numeric">{c.value.toFixed(6)}</td>
+                <td className="numeric">{c.std_error.toFixed(6)}</td>
+                <td className="numeric">{c.t_statistic.toFixed(3)}</td>
+                <td className={`numeric ${pSigClass(c.p_value)}`}>
+                  {c.p_value < 0.0001 ? "<0.0001" : c.p_value.toFixed(4)}
+                </td>
+                <td className={`sig-stars ${pSigClass(c.p_value)}`}>{sigStars(c.p_value)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="model-stats-row">
+        <div className="model-section model-fit">
+          <h4>Model Fit</h4>
+          <div className="stat-grid">
+            <span className="stat-label">R²</span><span className="stat-val">{model.r_squared.toFixed(4)}</span>
+            <span className="stat-label">Adj R²</span><span className="stat-val">{model.adj_r_squared.toFixed(4)}</span>
+            <span className="stat-label">SE of Regression</span><span className="stat-val">{model.se_regression.toFixed(6)}</span>
+          </div>
+        </div>
+
+        <div className="model-section model-anova">
+          <h4>ANOVA</h4>
+          <div className="stat-grid">
+            <span className="stat-label">F-statistic</span><span className="stat-val">{model.f_statistic.toFixed(2)}</span>
+            <span className="stat-label">F p-value</span>
+            <span className={`stat-val ${pSigClass(model.f_p_value)}`}>
+              {model.f_p_value < 0.0001 ? "<0.0001" : model.f_p_value.toFixed(4)}
+            </span>
+            <span className="stat-label">df (model)</span><span className="stat-val">{model.df_model}</span>
+            <span className="stat-label">df (residual)</span><span className="stat-val">{model.df_residual}</span>
+            <span className="stat-label">N observations</span><span className="stat-val">{model.n_observations}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RegressionDetailPanel({ detail }: { detail: import("./types").RegressionDetail }) {
+  return (
+    <div className="regression-detail">
+      <div className="ratio-cards">
+        <div className="ratio-card">
+          <div className="label">Sharpe Ratio</div>
+          <div className={`value ${colorClass(detail.ratios.sharpe_ratio)}`}>
+            {detail.ratios.sharpe_ratio.toFixed(3)}
+          </div>
+        </div>
+        <div className="ratio-card">
+          <div className="label">Information Ratio</div>
+          <div className={`value ${colorClass(detail.ratios.information_ratio)}`}>
+            {detail.ratios.information_ratio.toFixed(3)}
+          </div>
+        </div>
+      </div>
+
+      <div className="model-cards">
+        <ModelCard model={detail.benchmark} />
+        <ModelCard model={detail.capm} />
+        <ModelCard model={detail.ff3} />
+        <ModelCard model={detail.ff5} />
+        <ModelCard model={detail.ff6} />
+      </div>
+
+      <div className="sig-legend">
+        <span className="p-sig-001">*** p &lt; 0.01</span>
+        <span className="p-sig-005">** p &lt; 0.05</span>
+        <span className="p-sig-010">* p &lt; 0.10</span>
+      </div>
+    </div>
   );
 }
 
@@ -415,13 +586,43 @@ function DataDictionary() {
           </p>
         </div>
         <div className="dict-card">
+          <h3>Fama-French 3-Factor Model</h3>
+          <p className="dict-formula">R<sub>i</sub> &minus; R<sub>f</sub> = &alpha;<sub>i</sub> + &beta;<sub>1</sub>(R<sub>m</sub>&minus;R<sub>f</sub>) + &beta;<sub>2</sub>SMB + &beta;<sub>3</sub>HML + &epsilon;<sub>i</sub></p>
+          <p>
+            Extends CAPM with size (SMB) and value (HML) factors.
+          </p>
+        </div>
+        <div className="dict-card">
+          <h3>Fama-French 5-Factor Model</h3>
+          <p className="dict-formula">R<sub>i</sub> &minus; R<sub>f</sub> = &alpha;<sub>i</sub> + &beta;<sub>1</sub>(R<sub>m</sub>&minus;R<sub>f</sub>) + &beta;<sub>2</sub>SMB + &beta;<sub>3</sub>HML + &beta;<sub>4</sub>RMW + &beta;<sub>5</sub>CMA + &epsilon;<sub>i</sub></p>
+          <p>
+            Adds profitability (RMW) and investment (CMA) factors to the 3-factor model.
+          </p>
+        </div>
+        <div className="dict-card">
           <h3>Fama-French 6-Factor Model</h3>
           <p className="dict-formula">R<sub>i</sub> &minus; R<sub>f</sub> = &alpha;<sub>i</sub> + &beta;<sub>1</sub>(R<sub>m</sub>&minus;R<sub>f</sub>) + &beta;<sub>2</sub>SMB + &beta;<sub>3</sub>HML + &beta;<sub>4</sub>RMW + &beta;<sub>5</sub>CMA + &beta;<sub>6</sub>Mom + &epsilon;<sub>i</sub></p>
           <p>
-            An extension of CAPM that explains stock returns using six risk factors instead of one.
-            This model captures size, value, profitability, investment, and momentum effects
-            that CAPM alone cannot explain. Higher R&sup2; values indicate better explanatory power.
+            The full 6-factor model includes momentum (Mom/UMD) in addition to the 5-factor model.
           </p>
+        </div>
+      </section>
+
+      <section className="dict-section">
+        <h2>Regression Analysis Tab</h2>
+        <div className="dict-table-wrap">
+          <table className="dict-table">
+            <thead><tr><th>Field</th><th>Description</th><th>Interpretation</th></tr></thead>
+            <tbody>
+              <tr><td className="dict-field">Sharpe Ratio</td><td>(Ann. Return &minus; R<sub>f</sub>) / Ann. Std Dev</td><td>Risk-adjusted return per unit of total risk. Higher is better. &gt;1.0 is strong, &gt;2.0 is excellent</td></tr>
+              <tr><td className="dict-field">Information Ratio</td><td>CAPM Alpha / Tracking Error</td><td>Risk-adjusted excess return per unit of active risk. Measures manager skill vs benchmark</td></tr>
+              <tr><td className="dict-field">p-Value</td><td>Probability of observing the coefficient under H<sub>0</sub>: &beta;=0</td><td>*** p&lt;0.01 (highly significant), ** p&lt;0.05 (significant), * p&lt;0.10 (marginal)</td></tr>
+              <tr><td className="dict-field">t-Statistic</td><td>Coefficient / Standard Error</td><td>Measures how many standard errors the coefficient is from zero</td></tr>
+              <tr><td className="dict-field">F-Statistic</td><td>(SS<sub>reg</sub>/k) / (SS<sub>res</sub>/(n&minus;k&minus;1))</td><td>Tests joint significance of all predictors. Large F with small p means the model explains significant variation</td></tr>
+              <tr><td className="dict-field">Adj R²</td><td>R² adjusted for number of predictors</td><td>Penalizes model complexity. Compare across models with different numbers of factors</td></tr>
+              <tr><td className="dict-field">SE of Regression</td><td>&radic;(SS<sub>res</sub> / df<sub>resid</sub>)</td><td>Average size of residuals. Lower means tighter fit</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -488,7 +689,7 @@ function DataDictionary() {
         <div className="dict-card">
           <h3>Data Sources</h3>
           <ul>
-            <li><strong>Stock/fund prices</strong> &mdash; Yahoo Finance daily adjusted close, ~1 year lookback</li>
+            <li><strong>Stock/fund prices</strong> &mdash; Yahoo Finance daily adjusted close, 5-year lookback</li>
             <li><strong>Factor data</strong> &mdash; Kenneth French Data Library (Dartmouth), daily frequency</li>
             <li><strong>Risk-free rate</strong> &mdash; 1-month U.S. Treasury bill rate, included in the French data files</li>
             <li><strong>S&P 500 list</strong> &mdash; Wikipedia "List of S&P 500 companies"</li>

@@ -1,4 +1,5 @@
 use anyhow::Result;
+use serde_json;
 use tokio_postgres::{Client, NoTls};
 
 use crate::types::StockAnalysis;
@@ -41,6 +42,7 @@ pub async fn create_tables(client: &Client) -> Result<()> {
                 ff6_beta_mom DOUBLE PRECISION NOT NULL,
                 ff6_expected_return DOUBLE PRECISION NOT NULL,
                 ff6_r_squared DOUBLE PRECISION NOT NULL,
+                regression_detail JSONB,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                 UNIQUE (dataset, ticker)
             );
@@ -72,14 +74,16 @@ pub async fn insert_analyses(
                 capm_alpha, capm_beta, capm_expected_return, capm_r_squared,
                 ff6_alpha, ff6_beta_mkt, ff6_beta_smb, ff6_beta_hml,
                 ff6_beta_rmw, ff6_beta_cma, ff6_beta_mom,
-                ff6_expected_return, ff6_r_squared
+                ff6_expected_return, ff6_r_squared,
+                regression_detail
             ) VALUES (
                 $1, $2, $3, $4, $5,
                 $6, $7,
                 $8, $9, $10, $11,
                 $12, $13, $14, $15,
                 $16, $17, $18,
-                $19, $20
+                $19, $20,
+                $21
             )",
         )
         .await?;
@@ -110,6 +114,7 @@ pub async fn insert_analyses(
                     &a.ff6.beta_mom,
                     &a.ff6.expected_return,
                     &a.ff6.r_squared,
+                    &serde_json::to_value(&a.regression_detail).unwrap_or_default(),
                 ],
             )
             .await?;

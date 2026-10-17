@@ -42,7 +42,7 @@ async fn analyze_securities(
                     tokio::time::sleep(std::time::Duration::from_millis(500)).await;
                 }
 
-                let prices = match stock_data::fetch_historical_prices(&client, &ticker, 400).await
+                let prices = match stock_data::fetch_historical_prices(&client, &ticker, 1890).await
                 {
                     Ok(p) => p,
                     Err(e) => {

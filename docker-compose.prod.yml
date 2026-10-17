@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: finmodels
-      POSTGRES_PASSWORD: finmodels
+      POSTGRES_PASSWORD: __DB_PASSWORD__
       POSTGRES_DB: financial_models
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -13,17 +13,25 @@ services:
       interval: 5s
       timeout: 3s
       retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   backend:
     image: ghcr.io/jrich8573/financial-modeling/backend:latest
     restart: on-failure
     environment:
-      DATABASE_URL: postgres://finmodels:finmodels@db:5432/financial_models
+      DATABASE_URL: postgres://finmodels:__DB_PASSWORD__@db:5432/financial_models
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - analysis_data:/app/web/public
+    deploy:
+      resources:
+        limits:
+          memory: 512M
 
   web:
     image: ghcr.io/jrich8573/financial-modeling/web:latest
@@ -34,6 +42,10 @@ services:
       - analysis_data:/data
     depends_on:
       - backend
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
 volumes:
   pgdata:
