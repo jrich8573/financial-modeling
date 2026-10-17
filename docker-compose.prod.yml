@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: finmodels
+      POSTGRES_PASSWORD: finmodels
+      POSTGRES_DB: financial_models
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finmodels -d financial_models"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    image: ghcr.io/jrich8573/financial-modeling/backend:latest
+    restart: on-failure
+    environment:
+      DATABASE_URL: postgres://finmodels:finmodels@db:5432/financial_models
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - analysis_data:/app/web/public
+
+  web:
+    image: ghcr.io/jrich8573/financial-modeling/web:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - analysis_data:/data
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  analysis_data:
