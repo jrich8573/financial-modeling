@@ -1,0 +1,1595 @@
+[
+  {
+    "info": {
+      "ticker": "DCOR",
+      "company": "Dimensional US Core Fixed Income ETF",
+      "sector": "ETF - US Core Fixed"
+    },
+    "current_price": 83.6500015258789,
+    "capm": {
+      "alpha": 0.013756944386365955,
+      "beta": 0.9091564605875153,
+      "expected_return": 0.1733332713098977,
+      "r_squared": 0.9557388741057664
+    },
+    "ff6": {
+      "alpha": -0.008947136796313513,
+      "beta_mkt": 0.9753744910214813,
+      "beta_smb": 0.08961198753890756,
+      "beta_hml": 0.09205009640717787,
+      "beta_rmw": 0.031150955707804018,
+      "beta_cma": 0.10472556231429733,
+      "beta_mom": 0.01132032555570378,
+      "expected_return": 0.19603735249257717,
+      "r_squared": 0.9857910660531887
+    },
+    "annualized_std_dev": 0.12190946180034505,
+    "annualized_return": 0.1655379656208611
+  },
+  {
+    "info": {
+      "ticker": "DEMSX",
+      "company": "Emerging Markets Small Cap Portfolio",
+      "sector": "Emerging Markets Small"
+    },
+    "current_price": 28.450000762939453,
+    "capm": {
+      "alpha": -0.08154185278487967,
+      "beta": 0.7848083579710328,
+      "expected_return": 0.15505623190703385,
+      "r_squared": 0.4314562827178451
+    },
+    "ff6": {
+      "alpha": -0.09605125663341457,
+      "beta_mkt": 0.6893879732545293,
+      "beta_smb": -0.22304052218989745,
+      "beta_hml": 0.005816003335547687,
+      "beta_rmw": -0.161530306063628,
+      "beta_cma": 0.0937735393666364,
+      "beta_mom": 0.11987307255503166,
+      "expected_return": 0.16956563575556882,
+      "r_squared": 0.49153395298604374
+    },
+    "annualized_std_dev": 0.15442128762562618,
+    "annualized_return": 0.03679448278020625
+  },
+  {
+    "info": {
+      "ticker": "DEXC",
+      "company": "Dimensional Emerging Markets ex China Core Equity ETF",
+      "sector": "ETF - EM ex China"
+    },
+    "current_price": 77.05349731445312,
+    "capm": {
+      "alpha": 0.1373516239598683,
+      "beta": 1.5102899290382539,
+      "expected_return": 0.2616895860269829,
+      "r_squared": 0.5523532587199056
+    },
+    "ff6": {
+      "alpha": 0.1071199831902796,
+      "beta_mkt": 1.1719001986181166,
+      "beta_smb": -0.12092885947206977,
+      "beta_hml": -0.11693894179037723,
+      "beta_rmw": -0.321492400774942,
+      "beta_cma": 0.30795067445592605,
+      "beta_mom": 0.41552344701924193,
+      "expected_return": 0.2919212267965717,
+      "r_squared": 0.6789227293499507
+    },
+    "annualized_std_dev": 0.2653481318691088,
+    "annualized_return": 0.34730406760349686
+  },
+  {
+    "info": {
+      "ticker": "DFAC",
+      "company": "Dimensional US Core Equity Market ETF",
+      "sector": "ETF - US Core"
+    },
+    "current_price": 44.88999938964844,
+    "capm": {
+      "alpha": 0.01694454003636524,
+      "beta": 0.9198355335254504,
+      "expected_return": 0.17490291196195237,
+      "r_squared": 0.9444896420056483
+    },
+    "ff6": {
+      "alpha": -0.011403976738916709,
+      "beta_mkt": 0.9803659482469101,
+      "beta_smb": 0.11514659358744403,
+      "beta_hml": 0.11333685810342642,
+      "beta_rmw": 0.018128573168486095,
+      "beta_cma": 0.10663256664121898,
+      "beta_mom": 0.017442366934369957,
+      "expected_return": 0.20325142873723423,
+      "r_squared": 0.9823443857321578
+    },
+    "annualized_std_dev": 0.12257573164479255,
+    "annualized_return": 0.16572307229913363
+  },
+  {
+    "info": {
+      "ticker": "DFAE",
+      "company": "Dimensional Emerging Core Equity Market ETF",
+      "sector": "ETF - EM Core"
+    },
+    "current_price": 38.16999816894531,
+    "capm": {
+      "alpha": 0.04949302472111426,
+      "beta": 1.390667697104596,
+      "expected_return": 0.2441071685995683,
+      "r_squared": 0.5982183436949973
+    },
+    "ff6": {
+      "alpha": 0.02422960219388582,
+      "beta_mkt": 1.1463261997723668,
+      "beta_smb": -0.1527833974922701,
+      "beta_hml": -0.091216308131706,
+      "beta_rmw": -0.25108440009787103,
+      "beta_cma": 0.296968507900215,
+      "beta_mom": 0.3347254078789419,
+      "expected_return": 0.26937059112679684,
+      "r_squared": 0.7032953591266436
+    },
+    "annualized_std_dev": 0.23405395962569978,
+    "annualized_return": 0.2199978875470372
+  },
+  {
+    "info": {
+      "ticker": "DFAI",
+      "company": "Dimensional International Core Equity Market ETF",
+      "sector": "ETF - Intl Core"
+    },
+    "current_price": 41.189998626708984,
+    "capm": {
+      "alpha": 0.0246470759135422,
+      "beta": 0.87736391830109,
+      "expected_return": 0.16866031260880376,
+      "r_squared": 0.6118645036809311
+    },
+    "ff6": {
+      "alpha": -0.004887360165982849,
+      "beta_mkt": 0.9410587163928472,
+      "beta_smb": 0.04426904117364244,
+      "beta_hml": 0.0015906249090765212,
+      "beta_rmw": 0.01462713181548042,
+      "beta_cma": 0.43772773328793063,
+      "beta_mom": 0.14010670488744698,
+      "expected_return": 0.19819474868832873,
+      "r_squared": 0.6854593031780929
+    },
+    "annualized_std_dev": 0.14604689752523448,
+    "annualized_return": 0.12884151929917476
+  },
+  {
+    "info": {
+      "ticker": "DFALX",
+      "company": "International Core Equity Portfolio",
+      "sector": "Intl Developed"
+    },
+    "current_price": 37.72999954223633,
+    "capm": {
+      "alpha": 0.023551003844604648,
+      "beta": 0.8623422720460967,
+      "expected_return": 0.16645238812325555,
+      "r_squared": 0.6218739455597682
+    },
+    "ff6": {
+      "alpha": 0.0006215941340644939,
+      "beta_mkt": 0.9150038603390726,
+      "beta_smb": 0.05819657475785972,
+      "beta_hml": -0.04749936117372158,
+      "beta_rmw": 0.021906409608080213,
+      "beta_cma": 0.4685362959975563,
+      "beta_mom": 0.14896826984646844,
+      "expected_return": 0.18938179783379566,
+      "r_squared": 0.7007005666291662
+    },
+    "annualized_std_dev": 0.14333449652597963,
+    "annualized_return": 0.13059612747055538
+  },
+  {
+    "info": {
+      "ticker": "DFAPX",
+      "company": "Intermediate-Term Extended Quality Portfolio",
+      "sector": "US Intermediate Fixed"
+    },
+    "current_price": 9.699999809265137,
+    "capm": {
+      "alpha": -0.08672149806438606,
+      "beta": 0.09886648145616193,
+      "expected_return": 0.05423453506294513,
+      "r_squared": 0.09844332766650532
+    },
+    "ff6": {
+      "alpha": -0.07694485569428389,
+      "beta_mkt": 0.09484464911905761,
+      "beta_smb": 0.09711116644807863,
+      "beta_hml": -0.0925838272386466,
+      "beta_rmw": 0.024553616958900168,
+      "beta_cma": 0.09556286534935057,
+      "beta_mom": 0.0010619115152683523,
+      "expected_return": 0.04445789269284294,
+      "r_squared": 0.18312712503982886
+    },
+    "annualized_std_dev": 0.04367666145707051,
+    "annualized_return": -0.056869063206029136
+  },
+  {
+    "info": {
+      "ticker": "DFAS",
+      "company": "Dimensional US Small Cap ETF",
+      "sector": "ETF - US Small Cap"
+    },
+    "current_price": 77.26000213623047,
+    "capm": {
+      "alpha": 0.011336557132462222,
+      "beta": 0.9924250041064615,
+      "expected_return": 0.18557231974643676,
+      "r_squared": 0.6634701396785587
+    },
+    "ff6": {
+      "alpha": -0.07481252741240516,
+      "beta_mkt": 1.029377950819736,
+      "beta_smb": 0.6859992208726299,
+      "beta_hml": 0.28420998141675785,
+      "beta_rmw": -0.06486548949282672,
+      "beta_cma": 0.22248795950137834,
+      "beta_mom": 0.015597474613710416,
+      "expected_return": 0.2717214042913042,
+      "r_squared": 0.9545891951318086
+    },
+    "annualized_std_dev": 0.15698564145773863,
+    "annualized_return": 0.1195747871865871
+  },
+  {
+    "info": {
+      "ticker": "DFAT",
+      "company": "Dimensional US Targeted Value ETF",
+      "sector": "ETF - US Value"
+    },
+    "current_price": 67.18000030517578,
+    "capm": {
+      "alpha": 0.05326076094919803,
+      "beta": 0.7729006943868448,
+      "expected_return": 0.15330600949153395,
+      "r_squared": 0.45756644502744737
+    },
+    "ff6": {
+      "alpha": -0.060037879632540064,
+      "beta_mkt": 1.0005466344836522,
+      "beta_smb": 0.6503776885869518,
+      "beta_hml": 0.5107621373701319,
+      "beta_rmw": 0.07502946666559845,
+      "beta_cma": 0.21234069033804956,
+      "beta_mom": -0.03220045901913765,
+      "expected_return": 0.266604650073272,
+      "r_squared": 0.9415079766643282
+    },
+    "annualized_std_dev": 0.14812314674079946,
+    "annualized_return": 0.1325225912535919
+  },
+  {
+    "info": {
+      "ticker": "DFAU",
+      "company": "Dimensional US Core Equity 2 ETF",
+      "sector": "ETF - US Core"
+    },
+    "current_price": 52.86000061035156,
+    "capm": {
+      "alpha": -0.0010973044734623014,
+      "beta": 0.9684963917011048,
+      "expected_return": 0.18205522392763343,
+      "r_squared": 0.9896806488264841
+    },
+    "ff6": {
+      "alpha": -0.010651731351585187,
+      "beta_mkt": 0.9967983449456715,
+      "beta_smb": -0.0000974537690151267,
+      "beta_hml": 0.04161336868778351,
+      "beta_rmw": 0.013128658863175602,
+      "beta_cma": 0.046084740690338966,
+      "beta_mom": 0.016490705055787758,
+      "expected_return": 0.1916096508057563,
+      "r_squared": 0.9932274852306205
+    },
+    "annualized_std_dev": 0.12610019071056675,
+    "annualized_return": 0.16353237036435675
+  },
+  {
+    "info": {
+      "ticker": "DFAW",
+      "company": "Dimensional World Equity ETF",
+      "sector": "ETF - Global Equity"
+    },
+    "current_price": 83.36000061035156,
+    "capm": {
+      "alpha": 0.02017475839293103,
+      "beta": 0.9229503238903662,
+      "expected_return": 0.1753607327491887,
+      "r_squared": 0.8962425832572806
+    },
+    "ff6": {
+      "alpha": -0.0024395549596470936,
+      "beta_mkt": 0.9654174542557592,
+      "beta_smb": 0.08879930750783865,
+      "beta_hml": 0.04968643899289926,
+      "beta_rmw": 0.011848175353812662,
+      "beta_cma": 0.18693467478243062,
+      "beta_mom": 0.05362583440277485,
+      "expected_return": 0.1979750461017669,
+      "r_squared": 0.9284933460246347
+    },
+    "annualized_std_dev": 0.1276632924856972,
+    "annualized_return": 0.16049991054842105
+  },
+  {
+    "info": {
+      "ticker": "DFAX",
+      "company": "Dimensional World ex US Core Equity 2 ETF",
+      "sector": "ETF - Intl Core"
+    },
+    "current_price": 36.58000183105469,
+    "capm": {
+      "alpha": 0.03371970712114366,
+      "beta": 1.0389672523208084,
+      "expected_return": 0.1924132323668335,
+      "r_squared": 0.6574436348669991
+    },
+    "ff6": {
+      "alpha": 0.0062102714749134825,
+      "beta_mkt": 0.9951294776008472,
+      "beta_smb": -0.039251186382394165,
+      "beta_hml": -0.02288813231104414,
+      "beta_rmw": -0.07903835457546182,
+      "beta_cma": 0.3641105054045343,
+      "beta_mom": 0.20203638195110518,
+      "expected_return": 0.21992266801306376,
+      "r_squared": 0.7236539035449793
+    },
+    "annualized_std_dev": 0.16628562349247322,
+    "annualized_return": 0.16176980476233171
+  },
+  {
+    "info": {
+      "ticker": "DFCEX",
+      "company": "US Core Equity 1 Portfolio",
+      "sector": "US Core Equity"
+    },
+    "current_price": 33.88999938964844,
+    "capm": {
+      "alpha": 0.04810773325115816,
+      "beta": 1.0788158993462593,
+      "expected_return": 0.19827030035991147,
+      "r_squared": 0.5146725229716991
+    },
+    "ff6": {
+      "alpha": 0.02140966398595898,
+      "beta_mkt": 0.8832006123091827,
+      "beta_smb": -0.264611775837544,
+      "beta_hml": 0.026005021167738618,
+      "beta_rmw": -0.21436925370855608,
+      "beta_cma": 0.09118307952631821,
+      "beta_mom": 0.2723654658874156,
+      "expected_return": 0.2249683696251107,
+      "r_squared": 0.6375763641259165
+    },
+    "annualized_std_dev": 0.1953835278213561,
+    "annualized_return": 0.19470367784308684
+  },
+  {
+    "info": {
+      "ticker": "DFEMX",
+      "company": "Emerging Markets Portfolio",
+      "sector": "Emerging Markets"
+    },
+    "current_price": 44.97999954223633,
+    "capm": {
+      "alpha": 0.10184499002760293,
+      "beta": 1.234936102244763,
+      "expected_return": 0.2212172938396562,
+      "r_squared": 0.5214897751238583
+    },
+    "ff6": {
+      "alpha": 0.06722701499781389,
+      "beta_mkt": 0.9871117952455537,
+      "beta_smb": -0.2637711838733493,
+      "beta_hml": 0.049531001773240435,
+      "beta_rmw": -0.2623175837495174,
+      "beta_cma": 0.0663320539939064,
+      "beta_mom": 0.3200499736568181,
+      "expected_return": 0.2558352688694453,
+      "r_squared": 0.6519005287076922
+    },
+    "annualized_std_dev": 0.22202674993102806,
+    "annualized_return": 0.2684255564230238
+  },
+  {
+    "info": {
+      "ticker": "DFEOX",
+      "company": "US Equity Portfolio",
+      "sector": "US Core Equity"
+    },
+    "current_price": 56.54999923706055,
+    "capm": {
+      "alpha": 0.01142202237363996,
+      "beta": 0.8978025084443457,
+      "expected_return": 0.17166443498403136,
+      "r_squared": 0.9549837150113204
+    },
+    "ff6": {
+      "alpha": -0.010353506683915716,
+      "beta_mkt": 0.9572274969552692,
+      "beta_smb": 0.10292364909768903,
+      "beta_hml": 0.08925664914201503,
+      "beta_rmw": 0.05970763678241764,
+      "beta_cma": 0.09510514140735873,
+      "beta_mom": 0.043243635274518855,
+      "expected_return": 0.19343996404158706,
+      "r_squared": 0.9859889683732708
+    },
+    "annualized_std_dev": 0.11885530640697418,
+    "annualized_return": 0.17125408974562983
+  },
+  {
+    "info": {
+      "ticker": "DFEQX",
+      "company": "Short-Term Government Portfolio",
+      "sector": "US Short-Term Fixed"
+    },
+    "current_price": 10.270000457763672,
+    "capm": {
+      "alpha": -0.06153462897340959,
+      "beta": 0.03582115702687452,
+      "expected_return": 0.04496795314883008,
+      "r_squared": 0.05937786026566305
+    },
+    "ff6": {
+      "alpha": -0.057749527289086895,
+      "beta_mkt": 0.03681424564695535,
+      "beta_smb": 0.04979749686888925,
+      "beta_hml": -0.027612066024336156,
+      "beta_rmw": 0.035204777523865416,
+      "beta_cma": 0.019872057187511928,
+      "beta_mom": 0.015501333132233916,
+      "expected_return": 0.04118285146450736,
+      "r_squared": 0.12436016318169063
+    },
+    "annualized_std_dev": 0.0196211887456773,
+    "annualized_return": -0.021798530745843814
+  },
+  {
+    "info": {
+      "ticker": "DFEV",
+      "company": "Dimensional Emerging Markets Value ETF",
+      "sector": "ETF - EM Value"
+    },
+    "current_price": 41.540000915527344,
+    "capm": {
+      "alpha": 0.11673441763437445,
+      "beta": 1.2378976098390753,
+      "expected_return": 0.22165258468731847,
+      "r_squared": 0.549379035652243
+    },
+    "ff6": {
+      "alpha": 0.0834117392891425,
+      "beta_mkt": 1.0344476245995686,
+      "beta_smb": -0.22038069566295315,
+      "beta_hml": -0.04304352854197596,
+      "beta_rmw": -0.26662252487720306,
+      "beta_cma": 0.3306397861998906,
+      "beta_mom": 0.31175359616006504,
+      "expected_return": 0.2549752630325505,
+      "r_squared": 0.6658357138099695
+    },
+    "annualized_std_dev": 0.21725087495436857,
+    "annualized_return": 0.28985027416735143
+  },
+  {
+    "info": {
+      "ticker": "DFEVX",
+      "company": "Emerging Markets Value Portfolio",
+      "sector": "Emerging Markets Value"
+    },
+    "current_price": 44.81999969482422,
+    "capm": {
+      "alpha": 0.09789710572258473,
+      "beta": 0.9049231848831458,
+      "expected_return": 0.17271105235179599,
+      "r_squared": 0.448044929831658
+    },
+    "ff6": {
+      "alpha": 0.07150740236099,
+      "beta_mkt": 0.7929978465406393,
+      "beta_smb": -0.3344934795199265,
+      "beta_hml": 0.0216494842079058,
+      "beta_rmw": -0.20457995810713103,
+      "beta_cma": 0.2067059220395115,
+      "beta_mom": 0.20870478917626378,
+      "expected_return": 0.19910075571339078,
+      "r_squared": 0.5570369502646129
+    },
+    "annualized_std_dev": 0.17509803356888395,
+    "annualized_return": 0.2314835237192472
+  },
+  {
+    "info": {
+      "ticker": "DFGBX",
+      "company": "World ex US Government Fixed Income Portfolio",
+      "sector": "Global Fixed Income"
+    },
+    "current_price": 9.880000114440918,
+    "capm": {
+      "alpha": -0.0642399635816065,
+      "beta": 0.03137776111586298,
+      "expected_return": 0.04431485012241272,
+      "r_squared": 0.02162694931926401
+    },
+    "ff6": {
+      "alpha": -0.058108124408012905,
+      "beta_mkt": 0.025011003957212483,
+      "beta_smb": 0.042473104025103195,
+      "beta_hml": -0.0491125370596599,
+      "beta_rmw": 0.030159517918888046,
+      "beta_cma": 0.03941592708744013,
+      "beta_mom": 0.022206355142076684,
+      "expected_return": 0.03818301094881911,
+      "r_squared": 0.05816847165384731
+    },
+    "annualized_std_dev": 0.029466722974547395,
+    "annualized_return": -0.0305286223303457
+  },
+  {
+    "info": {
+      "ticker": "DFGFX",
+      "company": "One-Year Fixed Income Portfolio",
+      "sector": "US Short-Term Fixed"
+    },
+    "current_price": 9.720000267028809,
+    "capm": {
+      "alpha": -0.04632137657738085,
+      "beta": 0.0043191533240825725,
+      "expected_return": 0.04033769863886885,
+      "r_squared": 0.0005853320724317213
+    },
+    "ff6": {
+      "alpha": -0.04232444552238472,
+      "beta_mkt": -0.004635909501174932,
+      "beta_smb": 0.02690478925272296,
+      "beta_hml": -0.02611030519238261,
+      "beta_rmw": 0.020824133358805653,
+      "beta_cma": 0.005355145681476133,
+      "beta_mom": 0.017098432321277758,
+      "expected_return": 0.03634076758387272,
+      "r_squared": 0.020853066183038615
+    },
+    "annualized_std_dev": 0.02512650772901956,
+    "annualized_return": -0.01484999172781043
+  },
+  {
+    "info": {
+      "ticker": "DFGR",
+      "company": "Dimensional Global Real Estate ETF",
+      "sector": "ETF - Global Real Estate"
+    },
+    "current_price": 27.149999618530273,
+    "capm": {
+      "alpha": -0.019891119295955433,
+      "beta": 0.33125710027646416,
+      "expected_return": 0.08839197219034982,
+      "r_squared": 0.12479723645306429
+    },
+    "ff6": {
+      "alpha": -0.05310048866732264,
+      "beta_mkt": 0.5666050795604487,
+      "beta_smb": 0.284676879024863,
+      "beta_hml": 0.08750557817216463,
+      "beta_rmw": 0.21768672892773164,
+      "beta_cma": 0.42122652532926347,
+      "beta_mom": 0.025821805635149235,
+      "expected_return": 0.12160134156171705,
+      "r_squared": 0.38579036526660304
+    },
+    "annualized_std_dev": 0.12243953182019363,
+    "annualized_return": -0.004351952348941701
+  },
+  {
+    "info": {
+      "ticker": "DFIEX",
+      "company": "International Real Estate Securities Portfolio",
+      "sector": "Intl Real Estate"
+    },
+    "current_price": 22.1299991607666,
+    "capm": {
+      "alpha": 0.027934182990207772,
+      "beta": 0.8490201031071397,
+      "expected_return": 0.1644942576692678,
+      "r_squared": 0.6172704432388852
+    },
+    "ff6": {
+      "alpha": 0.006798843206315034,
+      "beta_mkt": 0.8808908058806447,
+      "beta_smb": 0.0555553810384371,
+      "beta_hml": -0.05435926198996968,
+      "beta_rmw": 0.00014499084258573491,
+      "beta_cma": 0.43782311934291196,
+      "beta_mom": 0.14277683602880015,
+      "expected_return": 0.18562959745316063,
+      "r_squared": 0.687650848843003
+    },
+    "annualized_std_dev": 0.14173432316321125,
+    "annualized_return": 0.13036515869081788
+  },
+  {
+    "info": {
+      "ticker": "DFIHX",
+      "company": "International High Relative Profitability Portfolio",
+      "sector": "Intl Developed"
+    },
+    "current_price": 10.199999809265137,
+    "capm": {
+      "alpha": -0.04324948300005407,
+      "beta": 0.004206855858149035,
+      "expected_return": 0.04032119283647604,
+      "r_squared": 0.0017959946971694007
+    },
+    "ff6": {
+      "alpha": -0.04137235734029875,
+      "beta_mkt": -0.0021256046257579512,
+      "beta_smb": 0.03889789964736926,
+      "beta_hml": -0.013543713927815317,
+      "beta_rmw": 0.021105197380182454,
+      "beta_cma": -0.000558463035625535,
+      "beta_mom": 0.014741157759909106,
+      "expected_return": 0.038444067176720706,
+      "r_squared": 0.06709269739765156
+    },
+    "annualized_std_dev": 0.013118701274684808,
+    "annualized_return": -0.004470997042489211
+  },
+  {
+    "info": {
+      "ticker": "DFIHX",
+      "company": "Intermediate Government Fixed Income Portfolio",
+      "sector": "US Fixed Income"
+    },
+    "current_price": 10.199999809265137,
+    "capm": {
+      "alpha": -0.04324948300005407,
+      "beta": 0.004206855858149035,
+      "expected_return": 0.04032119283647604,
+      "r_squared": 0.0017959946971694007
+    },
+    "ff6": {
+      "alpha": -0.04137235734029875,
+      "beta_mkt": -0.0021256046257579512,
+      "beta_smb": 0.03889789964736926,
+      "beta_hml": -0.013543713927815317,
+      "beta_rmw": 0.021105197380182454,
+      "beta_cma": -0.000558463035625535,
+      "beta_mom": 0.014741157759909106,
+      "expected_return": 0.038444067176720706,
+      "r_squared": 0.06709269739765156
+    },
+    "annualized_std_dev": 0.013118701274684808,
+    "annualized_return": -0.004470997042489211
+  },
+  {
+    "info": {
+      "ticker": "DFIP",
+      "company": "Dimensional Inflation-Protected Securities ETF",
+      "sector": "ETF - TIPS"
+    },
+    "current_price": 39.33000183105469,
+    "capm": {
+      "alpha": -0.10818909302499569,
+      "beta": 0.07449225526534903,
+      "expected_return": 0.05065194165677318,
+      "r_squared": 0.06322727785591631
+    },
+    "ff6": {
+      "alpha": -0.10172788286518386,
+      "beta_mkt": 0.08178387887518405,
+      "beta_smb": 0.0001587097117682493,
+      "beta_hml": -0.05754708262140394,
+      "beta_rmw": -0.009284092777398622,
+      "beta_cma": 0.07475811558596009,
+      "beta_mom": -0.01954782456118857,
+      "expected_return": 0.04419073149696134,
+      "r_squared": 0.09800160646780609
+    },
+    "annualized_std_dev": 0.03982847327520888,
+    "annualized_return": -0.06922907428960112
+  },
+  {
+    "info": {
+      "ticker": "DFIS",
+      "company": "Dimensional International Small Cap ETF",
+      "sector": "ETF - Intl Small"
+    },
+    "current_price": 35.744998931884766,
+    "capm": {
+      "alpha": 0.02840295360736773,
+      "beta": 0.88662940832303,
+      "expected_return": 0.17002218080505715,
+      "r_squared": 0.5767983015634444
+    },
+    "ff6": {
+      "alpha": 0.005165655833169994,
+      "beta_mkt": 0.8999422433270322,
+      "beta_smb": 0.08858516915069675,
+      "beta_hml": -0.019706711366361457,
+      "beta_rmw": -0.03656252224145562,
+      "beta_cma": 0.3384655803912013,
+      "beta_mom": 0.09661712240661524,
+      "expected_return": 0.19325947857925488,
+      "r_squared": 0.6188513645927959
+    },
+    "annualized_std_dev": 0.1520590964103442,
+    "annualized_return": 0.1285724017228531
+  },
+  {
+    "info": {
+      "ticker": "DFISX",
+      "company": "International Small Company Portfolio",
+      "sector": "Intl Small Cap"
+    },
+    "current_price": 27.5,
+    "capm": {
+      "alpha": 0.002213378920852386,
+      "beta": 0.8473811928575316,
+      "expected_return": 0.16425336595817974,
+      "r_squared": 0.6112544377647959
+    },
+    "ff6": {
+      "alpha": -0.009560803838934089,
+      "beta_mkt": 0.8389370632317484,
+      "beta_smb": 0.0683599956986351,
+      "beta_hml": -0.10526974801750444,
+      "beta_rmw": -0.06324122698182327,
+      "beta_cma": 0.3933713976466181,
+      "beta_mom": 0.08698047933983127,
+      "expected_return": 0.1760275487179662,
+      "r_squared": 0.6584135212705018
+    },
+    "annualized_std_dev": 0.14209729746633695,
+    "annualized_return": 0.10545668451410539
+  },
+  {
+    "info": {
+      "ticker": "DFIV",
+      "company": "Dimensional International Value ETF",
+      "sector": "ETF - Intl Value"
+    },
+    "current_price": 55.720001220703125,
+    "capm": {
+      "alpha": 0.10232918900618991,
+      "beta": 0.731438464145368,
+      "expected_return": 0.14721177242712669,
+      "r_squared": 0.47767862050320975
+    },
+    "ff6": {
+      "alpha": 0.05718501505868261,
+      "beta_mkt": 0.8728275662238105,
+      "beta_smb": 0.022620714116845908,
+      "beta_hml": 0.12645513263638675,
+      "beta_rmw": 0.09064709211369842,
+      "beta_cma": 0.4115724529301754,
+      "beta_mom": 0.15201633916029572,
+      "expected_return": 0.192355946374634,
+      "r_squared": 0.593903622915064
+    },
+    "annualized_std_dev": 0.1386949325774317,
+    "annualized_return": 0.19175316813570498
+  },
+  {
+    "info": {
+      "ticker": "DFIVX",
+      "company": "International Value Portfolio",
+      "sector": "Intl Developed Value"
+    },
+    "current_price": 32.15999984741211,
+    "capm": {
+      "alpha": 0.08536731645312516,
+      "beta": 0.7734201357859352,
+      "expected_return": 0.15338235847249054,
+      "r_squared": 0.5227447774395908
+    },
+    "ff6": {
+      "alpha": 0.0474315043812103,
+      "beta_mkt": 0.8679603593404728,
+      "beta_smb": 0.0464780063469149,
+      "beta_hml": 0.07297850475893627,
+      "beta_rmw": 0.05417968716044819,
+      "beta_cma": 0.3972634310618527,
+      "beta_mom": 0.14959506807709733,
+      "expected_return": 0.19131817054440536,
+      "r_squared": 0.6143837095350214
+    },
+    "annualized_std_dev": 0.1412495943670445,
+    "annualized_return": 0.18508247184855575
+  },
+  {
+    "info": {
+      "ticker": "DFLEX",
+      "company": "US Large Company Series",
+      "sector": "US Large Cap"
+    },
+    "current_price": 8.5600004196167,
+    "capm": {
+      "alpha": -0.06265956318290306,
+      "beta": 0.03738971805173794,
+      "expected_return": 0.04519850472986743,
+      "r_squared": 0.0553659193656153
+    },
+    "ff6": {
+      "alpha": -0.06493759802044696,
+      "beta_mkt": 0.03889790612981654,
+      "beta_smb": 0.02320904701151602,
+      "beta_hml": 0.0010469661623731868,
+      "beta_rmw": 0.0007948845795082617,
+      "beta_cma": 0.0228271672693326,
+      "beta_mom": 0.006170284393235706,
+      "expected_return": 0.047476539567411324,
+      "r_squared": 0.07908626105804883
+    },
+    "annualized_std_dev": 0.021115163861592595,
+    "annualized_return": -0.02502049892323821
+  },
+  {
+    "info": {
+      "ticker": "DFLMX",
+      "company": "Intermediate-Term Municipal Bond Portfolio",
+      "sector": "Municipal Bonds"
+    },
+    "current_price": 9.3056001663208,
+    "capm": {
+      "alpha": -0.04128835520513568,
+      "beta": 0.009494643462701343,
+      "expected_return": 0.03273400366155111,
+      "r_squared": 0.026450967596398867
+    },
+    "ff6": {
+      "alpha": -0.04303714664003473,
+      "beta_mkt": 0.004682084736814192,
+      "beta_smb": 0.016310871585872164,
+      "beta_hml": 0.016708478845749674,
+      "beta_rmw": 0.001192925336419702,
+      "beta_cma": -0.021864959856096565,
+      "beta_mom": 0.0060092378279978246,
+      "expected_return": 0.03448279509645017,
+      "r_squared": 0.10501102440198073
+    },
+    "annualized_std_dev": 0.008379311142001062,
+    "annualized_return": -0.006706958344209979
+  },
+  {
+    "info": {
+      "ticker": "DFLVX",
+      "company": "US Large Cap Value Portfolio",
+      "sector": "US Large Cap Value"
+    },
+    "current_price": 66.9000015258789,
+    "capm": {
+      "alpha": 0.12719966069086322,
+      "beta": 0.6443531601282361,
+      "expected_return": 0.13441172562753428,
+      "r_squared": 0.5791298241064684
+    },
+    "ff6": {
+      "alpha": 0.047980074688266074,
+      "beta_mkt": 0.8124429936054051,
+      "beta_smb": 0.10432195449466242,
+      "beta_hml": 0.3377751159804007,
+      "beta_rmw": -0.034480528664230015,
+      "beta_cma": 0.2775226922224466,
+      "beta_mom": 0.017514822683158876,
+      "expected_return": 0.2136313116301315,
+      "r_squared": 0.8305093199348036
+    },
+    "annualized_std_dev": 0.11030335117791365,
+    "annualized_return": 0.23216298655115097
+  },
+  {
+    "info": {
+      "ticker": "DFNM",
+      "company": "Dimensional National Municipal Bond ETF",
+      "sector": "ETF - Muni Bonds"
+    },
+    "current_price": 46.45000076293945,
+    "capm": {
+      "alpha": -0.053486251224607276,
+      "beta": 0.04461160865397279,
+      "expected_return": 0.04625999884455707,
+      "r_squared": 0.08027842229927906
+    },
+    "ff6": {
+      "alpha": -0.048481227709956665,
+      "beta_mkt": 0.048503317678635686,
+      "beta_smb": 0.009914258980896418,
+      "beta_hml": -0.029245123397940893,
+      "beta_rmw": 0.017079548408790876,
+      "beta_cma": 0.0177068470376023,
+      "beta_mom": -0.0014425174228075675,
+      "expected_return": 0.04125497532990644,
+      "r_squared": 0.10263191755160384
+    },
+    "annualized_std_dev": 0.02410908857962981,
+    "annualized_return": -0.02656250550480399
+  },
+  {
+    "info": {
+      "ticker": "DFQTX",
+      "company": "US Vector Equity Portfolio",
+      "sector": "US Core Equity"
+    },
+    "current_price": 50.36000061035156,
+    "capm": {
+      "alpha": 0.010607642123637575,
+      "beta": 0.900232820410052,
+      "expected_return": 0.17202164918049934,
+      "r_squared": 0.9342710183198047
+    },
+    "ff6": {
+      "alpha": -0.01908672157088543,
+      "beta_mkt": 0.961982770479063,
+      "beta_smb": 0.13440486070767418,
+      "beta_hml": 0.11922510327366961,
+      "beta_rmw": 0.04315032261333096,
+      "beta_cma": 0.10986355893468314,
+      "beta_mom": 0.04267381512426893,
+      "expected_return": 0.20171601287502233,
+      "r_squared": 0.9800407905541456
+    },
+    "annualized_std_dev": 0.12050475725553648,
+    "annualized_return": 0.16824266943504207
+  },
+  {
+    "info": {
+      "ticker": "DFREX",
+      "company": "Real Estate Securities Portfolio",
+      "sector": "US Real Estate"
+    },
+    "current_price": 42.59000015258789,
+    "capm": {
+      "alpha": 0.02536377720101826,
+      "beta": 0.2330972848513821,
+      "expected_return": 0.07396416206255574,
+      "r_squared": 0.050802999905199986
+    },
+    "ff6": {
+      "alpha": -0.012401194851629799,
+      "beta_mkt": 0.4956035741892698,
+      "beta_smb": 0.37504521360598475,
+      "beta_hml": 0.1155441436823953,
+      "beta_rmw": 0.2461692554488205,
+      "beta_cma": 0.41839236366815247,
+      "beta_mom": 0.0006561402377730507,
+      "expected_return": 0.11172913411520378,
+      "r_squared": 0.3409307945879504
+    },
+    "annualized_std_dev": 0.13589053052520828,
+    "annualized_return": 0.03179105723117259
+  },
+  {
+    "info": {
+      "ticker": "DFSD",
+      "company": "Dimensional Short-Duration Fixed Income ETF",
+      "sector": "ETF - Short Duration"
+    },
+    "current_price": 46.70000076293945,
+    "capm": {
+      "alpha": -0.07365561204543745,
+      "beta": 0.07202963534431557,
+      "expected_return": 0.05028997874472277,
+      "r_squared": 0.15223371345052494
+    },
+    "ff6": {
+      "alpha": -0.06962977970703733,
+      "beta_mkt": 0.0756390216635945,
+      "beta_smb": 0.03190184643366716,
+      "beta_hml": -0.03477859709727292,
+      "beta_rmw": 0.01377990034193571,
+      "beta_cma": 0.03876376908731555,
+      "beta_mom": -0.0014904905734903738,
+      "expected_return": 0.046264146406322634,
+      "r_squared": 0.1896940680854028
+    },
+    "annualized_std_dev": 0.02481684098416511,
+    "annualized_return": -0.031388392614255856
+  },
+  {
+    "info": {
+      "ticker": "DFSGX",
+      "company": "Short-Duration Real Return Portfolio",
+      "sector": "US Short-Term Fixed"
+    },
+    "current_price": 23.600000381469727,
+    "capm": {
+      "alpha": -0.150096053697658,
+      "beta": 0.9614197409065295,
+      "expected_return": 0.18101507757484445,
+      "r_squared": 0.5026050842553711
+    },
+    "ff6": {
+      "alpha": -0.17715032538439793,
+      "beta_mkt": 0.9993365061981307,
+      "beta_smb": 0.6248311304760398,
+      "beta_hml": -0.0741311854807791,
+      "beta_rmw": -0.11952620598620843,
+      "beta_cma": 0.4123563727984429,
+      "beta_mom": -0.16410543090844526,
+      "expected_return": 0.2080693492615843,
+      "r_squared": 0.7371838435497102
+    },
+    "annualized_std_dev": 0.17583806819740377,
+    "annualized_return": -0.04478442002945959
+  },
+  {
+    "info": {
+      "ticker": "DFSI",
+      "company": "Dimensional International Sustainability Core 1 ETF",
+      "sector": "ETF - Intl Sustainability"
+    },
+    "current_price": 44.70000076293945,
+    "capm": {
+      "alpha": -0.014612786653034256,
+      "beta": 0.9194686124177113,
+      "expected_return": 0.17484898084919084,
+      "r_squared": 0.6048867103052789
+    },
+    "ff6": {
+      "alpha": -0.03591886859658253,
+      "beta_mkt": 0.9623535930613046,
+      "beta_smb": 0.09009048222910049,
+      "beta_hml": -0.03586877922905493,
+      "beta_rmw": 0.018709533020139946,
+      "beta_cma": 0.39798802464936056,
+      "beta_mom": 0.12303689548248481,
+      "expected_return": 0.19615506279273912,
+      "r_squared": 0.6572688959888057
+    },
+    "annualized_std_dev": 0.15408732090610833,
+    "annualized_return": 0.08673096030712357
+  },
+  {
+    "info": {
+      "ticker": "DFSMX",
+      "company": "Short-Term Municipal Bond Portfolio",
+      "sector": "Municipal Bonds"
+    },
+    "current_price": 10.130000114440918,
+    "capm": {
+      "alpha": -0.043778482802079834,
+      "beta": 0.0005489658223518985,
+      "expected_return": 0.039783545707900186,
+      "r_squared": 0.00006162671612819359
+    },
+    "ff6": {
+      "alpha": -0.04148280864275916,
+      "beta_mkt": -0.0019431006012908365,
+      "beta_smb": 0.02703860152005884,
+      "beta_hml": -0.01094135613938906,
+      "beta_rmw": 0.02175404974851029,
+      "beta_cma": -0.005772657126129071,
+      "beta_mom": 0.01002709105233375,
+      "expected_return": 0.03748787154857951,
+      "r_squared": 0.07835761715526501
+    },
+    "annualized_std_dev": 0.009693103468820633,
+    "annualized_return": -0.007182478915432888
+  },
+  {
+    "info": {
+      "ticker": "DFSPX",
+      "company": "International Sustainability Core 1 Portfolio",
+      "sector": "Intl Sustainability"
+    },
+    "current_price": 16.850000381469727,
+    "capm": {
+      "alpha": -0.026407040344445815,
+      "beta": 0.9227910693693947,
+      "expected_return": 0.1753373250646834,
+      "r_squared": 0.6419718056880783
+    },
+    "ff6": {
+      "alpha": -0.04095679281339468,
+      "beta_mkt": 0.9568122508239448,
+      "beta_smb": 0.11452447492018941,
+      "beta_hml": -0.09973865100102397,
+      "beta_rmw": 0.003713275017443507,
+      "beta_cma": 0.46148220475707497,
+      "beta_mom": 0.11054050140612459,
+      "expected_return": 0.18988707753363238,
+      "r_squared": 0.7031929388225919
+    },
+    "annualized_std_dev": 0.151039504129277,
+    "annualized_return": 0.08080844711755542
+  },
+  {
+    "info": {
+      "ticker": "DFSTX",
+      "company": "US Micro Cap Portfolio",
+      "sector": "US Small Cap"
+    },
+    "current_price": 59.08000183105469,
+    "capm": {
+      "alpha": 0.009737318549412741,
+      "beta": 0.9843592665130434,
+      "expected_return": 0.18438679458999163,
+      "r_squared": 0.6576395049254481
+    },
+    "ff6": {
+      "alpha": -0.07462478176159049,
+      "beta_mkt": 1.0077117472003339,
+      "beta_smb": 0.7216597306895735,
+      "beta_hml": 0.2815697008517693,
+      "beta_rmw": -0.028200542169246973,
+      "beta_cma": 0.19023922957900272,
+      "beta_mom": 0.05017875243188444,
+      "expected_return": 0.2687488949009948,
+      "r_squared": 0.9479380724834974
+    },
+    "annualized_std_dev": 0.15637996327300263,
+    "annualized_return": 0.1348931965350053
+  },
+  {
+    "info": {
+      "ticker": "DFSU",
+      "company": "Dimensional US Sustainability Core 1 ETF",
+      "sector": "ETF - US Sustainability"
+    },
+    "current_price": 47.66999816894531,
+    "capm": {
+      "alpha": -0.024690823631975726,
+      "beta": 0.9622496146531024,
+      "expected_return": 0.18113705478918357,
+      "r_squared": 0.9282925986865097
+    },
+    "ff6": {
+      "alpha": -0.02819802288279211,
+      "beta_mkt": 1.0506893057992743,
+      "beta_smb": 0.1582750276940123,
+      "beta_hml": 0.017523160247023467,
+      "beta_rmw": 0.10790826295618981,
+      "beta_cma": 0.07546799895356196,
+      "beta_mom": -0.033795402712778366,
+      "expected_return": 0.18464425403999996,
+      "r_squared": 0.9673904532692231
+    },
+    "annualized_std_dev": 0.12961887662269123,
+    "annualized_return": 0.1292249042970306
+  },
+  {
+    "info": {
+      "ticker": "DFSV",
+      "company": "Dimensional US Small Cap Value ETF",
+      "sector": "ETF - US Small Value"
+    },
+    "current_price": 37.77000045776367,
+    "capm": {
+      "alpha": 0.07273118713694225,
+      "beta": 0.8016859862262462,
+      "expected_return": 0.15753695392978015,
+      "r_squared": 0.4539965948587368
+    },
+    "ff6": {
+      "alpha": -0.05144111786261108,
+      "beta_mkt": 1.0431529587448465,
+      "beta_smb": 0.6551841594896011,
+      "beta_hml": 0.5834827617505653,
+      "beta_rmw": 0.05842685752736515,
+      "beta_cma": 0.17082397295641,
+      "beta_mom": -0.050725366385069214,
+      "expected_return": 0.28170925892933346,
+      "r_squared": 0.9408229372756273
+    },
+    "annualized_std_dev": 0.15405544820372116,
+    "annualized_return": 0.15714820415004027
+  },
+  {
+    "info": {
+      "ticker": "DFSVX",
+      "company": "US Small Cap Value Portfolio",
+      "sector": "US Small Cap Value"
+    },
+    "current_price": 59.959999084472656,
+    "capm": {
+      "alpha": 0.06780275618339446,
+      "beta": 0.7930032350368033,
+      "expected_return": 0.1562607383520953,
+      "r_squared": 0.44266195041541057
+    },
+    "ff6": {
+      "alpha": -0.057343633675567746,
+      "beta_mkt": 1.0236464077607763,
+      "beta_smb": 0.7047784789655659,
+      "beta_hml": 0.5868236984096966,
+      "beta_rmw": 0.08297247755182793,
+      "beta_cma": 0.1557166030404704,
+      "beta_mom": -0.02354279179733977,
+      "expected_return": 0.28140712821105746,
+      "r_squared": 0.9435853782039635
+    },
+    "annualized_std_dev": 0.15429377891456794,
+    "annualized_return": 0.16574476471561628
+  },
+  {
+    "info": {
+      "ticker": "DFTEX",
+      "company": "National Municipal Bond Portfolio",
+      "sector": "Municipal Bonds"
+    },
+    "current_price": 9.260000228881836,
+    "capm": {
+      "alpha": -0.10145307927641431,
+      "beta": 0.13773934559468057,
+      "expected_return": 0.059948179699350714,
+      "r_squared": 0.18257950648077959
+    },
+    "ff6": {
+      "alpha": -0.0891513407405966,
+      "beta_mkt": 0.13547880611645757,
+      "beta_smb": 0.10167676818760996,
+      "beta_hml": -0.10868417497082486,
+      "beta_rmw": 0.04560089151715748,
+      "beta_cma": 0.11032538740165934,
+      "beta_mom": 0.016365028632929386,
+      "expected_return": 0.04764644116353294,
+      "r_squared": 0.27324107669528563
+    },
+    "annualized_std_dev": 0.04400482657054233,
+    "annualized_return": -0.05940363410920957
+  },
+  {
+    "info": {
+      "ticker": "DFUEX",
+      "company": "US Sustainability Core 1 Portfolio",
+      "sector": "US Sustainability"
+    },
+    "current_price": 37.88999938964844,
+    "capm": {
+      "alpha": -0.009058535368812907,
+      "beta": 1.0495470596794407,
+      "expected_return": 0.19396828268042632,
+      "r_squared": 0.9489980579401578
+    },
+    "ff6": {
+      "alpha": -0.034970753523573185,
+      "beta_mkt": 1.0848875702443812,
+      "beta_smb": 0.16204701221016946,
+      "beta_hml": 0.11527792717959279,
+      "beta_rmw": 0.03610206331354848,
+      "beta_cma": 0.035210672003607474,
+      "beta_mom": 0.03152326149513496,
+      "expected_return": 0.21988050083518657,
+      "r_squared": 0.9751884190207326
+    },
+    "annualized_std_dev": 0.13930825694658416,
+    "annualized_return": 0.17147504892711818
+  },
+  {
+    "info": {
+      "ticker": "DFUS",
+      "company": "Dimensional US Equity ETF",
+      "sector": "ETF - US Core"
+    },
+    "current_price": 83.70999908447266,
+    "capm": {
+      "alpha": -0.006772135275062608,
+      "beta": 1.000091890475992,
+      "expected_return": 0.18669922061041994,
+      "r_squared": 0.9922560207992713
+    },
+    "ff6": {
+      "alpha": -0.011848641378195428,
+      "beta_mkt": 0.9999871938963518,
+      "beta_smb": -0.036806200566528335,
+      "beta_hml": 0.022595038054951777,
+      "beta_rmw": -0.010421683399860937,
+      "beta_cma": 0.01264961412070123,
+      "beta_mom": 0.021090563349600244,
+      "expected_return": 0.1917757267135528,
+      "r_squared": 0.9942277212429077
+    },
+    "annualized_std_dev": 0.1301127262500027,
+    "annualized_return": 0.16494792146823456
+  },
+  {
+    "info": {
+      "ticker": "DFUSX",
+      "company": "US Large Company Portfolio",
+      "sector": "US Large Cap"
+    },
+    "current_price": 51.810001373291016,
+    "capm": {
+      "alpha": -0.004251226760759541,
+      "beta": 0.9663091889342427,
+      "expected_return": 0.18173374261580924,
+      "r_squared": 0.9922822442211255
+    },
+    "ff6": {
+      "alpha": -0.002346378539140885,
+      "beta_mkt": 0.985083483291402,
+      "beta_smb": -0.05492659843848685,
+      "beta_hml": 0.00786648981730731,
+      "beta_rmw": 0.0351954944983916,
+      "beta_cma": -0.005425971644811151,
+      "beta_mom": 0.018216104647453768,
+      "expected_return": 0.1798288943941906,
+      "r_squared": 0.9953537444732476
+    },
+    "annualized_std_dev": 0.12579577863805244,
+    "annualized_return": 0.17871359240585716
+  },
+  {
+    "info": {
+      "ticker": "DFUV",
+      "company": "Dimensional US Marketwide Value ETF",
+      "sector": "ETF - US Value"
+    },
+    "current_price": 55.75,
+    "capm": {
+      "alpha": 0.12799177827537875,
+      "beta": 0.7071878402654035,
+      "expected_return": 0.14364734644175273,
+      "r_squared": 0.6326395992058024
+    },
+    "ff6": {
+      "alpha": 0.044354621013044805,
+      "beta_mkt": 0.8392788610465541,
+      "beta_smb": 0.13087826289046312,
+      "beta_hml": 0.34535271271122425,
+      "beta_rmw": -0.07857669588205088,
+      "beta_cma": 0.26137677018456273,
+      "beta_mom": 0.026972219997445396,
+      "expected_return": 0.22728450370408673,
+      "r_squared": 0.8649812851610559
+    },
+    "annualized_std_dev": 0.11492475262082472,
+    "annualized_return": 0.2373832214362055
+  },
+  {
+    "info": {
+      "ticker": "DFVQX",
+      "company": "International Vector Equity Portfolio",
+      "sector": "Intl Developed"
+    },
+    "current_price": 19.780000686645508,
+    "capm": {
+      "alpha": 0.03615547515884355,
+      "beta": 0.833965895482487,
+      "expected_return": 0.16228154722057458,
+      "r_squared": 0.596235428582043
+    },
+    "ff6": {
+      "alpha": 0.012119386122588515,
+      "beta_mkt": 0.8522780894148042,
+      "beta_smb": 0.053720337986957106,
+      "beta_hml": -0.04011794662639981,
+      "beta_rmw": -0.022699141467187045,
+      "beta_cma": 0.41926629246768304,
+      "beta_mom": 0.1432908383818926,
+      "expected_return": 0.18631763625682968,
+      "r_squared": 0.6661188906426785
+    },
+    "annualized_std_dev": 0.14178917686890954,
+    "annualized_return": 0.13724160951915
+  },
+  {
+    "info": {
+      "ticker": "DGCB",
+      "company": "Dimensional Global Core Fixed Income ETF",
+      "sector": "ETF - Global Fixed"
+    },
+    "current_price": 52.310001373291016,
+    "capm": {
+      "alpha": -0.1045996287705787,
+      "beta": 0.16881823184534583,
+      "expected_return": 0.06451624319729136,
+      "r_squared": 0.23501901898239774
+    },
+    "ff6": {
+      "alpha": -0.09600541534300273,
+      "beta_mkt": 0.18400833206906417,
+      "beta_smb": 0.06944133127813915,
+      "beta_hml": -0.08173779451819858,
+      "beta_rmw": 0.039584997098535316,
+      "beta_cma": 0.11218713542847178,
+      "beta_mom": 0.005202785756617111,
+      "expected_return": 0.05592202976971538,
+      "r_squared": 0.2970504137729142
+    },
+    "annualized_std_dev": 0.046444138576630524,
+    "annualized_return": -0.049956053751909923
+  },
+  {
+    "info": {
+      "ticker": "DGEIX",
+      "company": "Global Equity Portfolio",
+      "sector": "Global Equity"
+    },
+    "current_price": 44.849998474121094,
+    "capm": {
+      "alpha": 0.00020661348132535546,
+      "beta": 0.9029085740454846,
+      "expected_return": 0.17241493909484562,
+      "r_squared": 0.8972522514124018
+    },
+    "ff6": {
+      "alpha": -0.026148489847508175,
+      "beta_mkt": 0.9279633484038494,
+      "beta_smb": 0.1006915348497465,
+      "beta_hml": 0.06967683108190648,
+      "beta_rmw": 0.00378461875800995,
+      "beta_cma": 0.1594125300974594,
+      "beta_mom": 0.07221142911017059,
+      "expected_return": 0.19877004242367918,
+      "r_squared": 0.9338016033681049
+    },
+    "annualized_std_dev": 0.1235989530263346,
+    "annualized_return": 0.14715214844549918
+  },
+  {
+    "info": {
+      "ticker": "DGSIX",
+      "company": "Global Small Company Portfolio",
+      "sector": "Global Small Cap"
+    },
+    "current_price": 23.56999969482422,
+    "capm": {
+      "alpha": -0.07665961212067884,
+      "beta": 0.5803259438614692,
+      "expected_return": 0.1250008224457413,
+      "r_squared": 0.533647347536939
+    },
+    "ff6": {
+      "alpha": -0.08785686036094803,
+      "beta_mkt": 0.5549973481911247,
+      "beta_smb": 0.13336252943803906,
+      "beta_hml": -0.00018235038598928,
+      "beta_rmw": -0.031510716134771605,
+      "beta_cma": 0.07998297387917298,
+      "beta_mom": 0.026610011389878313,
+      "expected_return": 0.13619807068601042,
+      "r_squared": 0.5559486874896448
+    },
+    "annualized_std_dev": 0.10192928517380485,
+    "annualized_return": 0.02718923698490827
+  },
+  {
+    "info": {
+      "ticker": "DISV",
+      "company": "Dimensional International Small Cap Value ETF",
+      "sector": "ETF - Intl Small Value"
+    },
+    "current_price": 42.459999084472656,
+    "capm": {
+      "alpha": 0.09574410444061107,
+      "beta": 0.8141987725382547,
+      "expected_return": 0.15937611901273718,
+      "r_squared": 0.5091647867635305
+    },
+    "ff6": {
+      "alpha": 0.061793512110196694,
+      "beta_mkt": 0.896611768537195,
+      "beta_smb": 0.04113505323194483,
+      "beta_hml": 0.054363673301194626,
+      "beta_rmw": 0.0034174697679217325,
+      "beta_cma": 0.37367809168203747,
+      "beta_mom": 0.09352815460051,
+      "expected_return": 0.1933267113431516,
+      "r_squared": 0.5679569039891492
+    },
+    "annualized_std_dev": 0.14866679361520438,
+    "annualized_return": 0.18612527520814504
+  },
+  {
+    "info": {
+      "ticker": "DREIX",
+      "company": "Global Real Estate Securities Portfolio",
+      "sector": "Global Real Estate"
+    },
+    "current_price": 31.770000457763672,
+    "capm": {
+      "alpha": -0.017524578965331127,
+      "beta": 0.9205113922477463,
+      "expected_return": 0.17500225160798033,
+      "r_squared": 0.8318415864501062
+    },
+    "ff6": {
+      "alpha": -0.03749201779691942,
+      "beta_mkt": 0.9150355570868829,
+      "beta_smb": 0.08936432431631783,
+      "beta_hml": 0.02632550995170524,
+      "beta_rmw": -0.01482703676230912,
+      "beta_cma": 0.15823481711678852,
+      "beta_mom": 0.08162520626546144,
+      "expected_return": 0.19496969043956858,
+      "r_squared": 0.857758250265696
+    },
+    "annualized_std_dev": 0.13056424683891252,
+    "annualized_return": 0.12937356760533847
+  },
+  {
+    "info": {
+      "ticker": "DSCLX",
+      "company": "US Social Core Equity 2 Portfolio",
+      "sector": "US Social Core"
+    },
+    "current_price": 20.690000534057617,
+    "capm": {
+      "alpha": 0.015175384214148185,
+      "beta": 0.9121355753085637,
+      "expected_return": 0.1737711501033537,
+      "r_squared": 0.6328329157092778
+    },
+    "ff6": {
+      "alpha": -0.004322879711381344,
+      "beta_mkt": 0.9299935169723147,
+      "beta_smb": 0.0513989551280116,
+      "beta_hml": -0.06708565004475991,
+      "beta_rmw": -0.01456798727044556,
+      "beta_cma": 0.43361005882868664,
+      "beta_mom": 0.1431172533333248,
+      "expected_return": 0.19326941402888317,
+      "r_squared": 0.6931152500958149
+    },
+    "annualized_std_dev": 0.15072564042516517,
+    "annualized_return": 0.12017524631797505
+  },
+  {
+    "info": {
+      "ticker": "DUSB",
+      "company": "Dimensional Ultra-Short Fixed Income ETF",
+      "sector": "ETF - Ultra Short"
+    },
+    "current_price": 50.619998931884766,
+    "capm": {
+      "alpha": -0.04357228755907024,
+      "beta": 0.01862126361788417,
+      "expected_return": 0.042439863673024075,
+      "r_squared": 0.03664634050868587
+    },
+    "ff6": {
+      "alpha": -0.04237609601682706,
+      "beta_mkt": 0.016307863564210004,
+      "beta_smb": 0.005554379991749672,
+      "beta_hml": -0.004110264072327663,
+      "beta_rmw": 0.0031075359735939882,
+      "beta_cma": -0.007805782816492071,
+      "beta_mom": -0.0011319700745245102,
+      "expected_return": 0.04124367213078088,
+      "r_squared": 0.04156407983000687
+    },
+    "annualized_std_dev": 0.01281471352731274,
+    "annualized_return": -0.003414853946335894
+  },
+  {
+    "info": {
+      "ticker": "DUSQX",
+      "company": "US Large Cap Equity Portfolio",
+      "sector": "US Large Cap"
+    },
+    "current_price": 42.709999084472656,
+    "capm": {
+      "alpha": 0.004088957058790843,
+      "beta": 0.910698693495013,
+      "expected_return": 0.17355995310902145,
+      "r_squared": 0.9847399621545688
+    },
+    "ff6": {
+      "alpha": 0.0018448136344697895,
+      "beta_mkt": 0.9578607455847348,
+      "beta_smb": -0.01381068671093219,
+      "beta_hml": 0.019258030016226668,
+      "beta_rmw": 0.06520082185765941,
+      "beta_cma": 0.04409418262186146,
+      "beta_mom": 0.023428322913641386,
+      "expected_return": 0.1758040965333425,
+      "r_squared": 0.9900086307373573
+    },
+    "annualized_std_dev": 0.11910728186825763,
+    "annualized_return": 0.17583739689110023
+  }
+]
