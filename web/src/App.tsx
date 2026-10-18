@@ -75,6 +75,7 @@ function getValue(stock: StockAnalysis, key: string): string | number {
     case "ff6_mom":     return stock.ff6.beta_mom;
     case "ff6_er":      return stock.ff6.expected_return;
     case "ff6_r2":      return stock.ff6.r_squared;
+    case "benchmark":   return stock.info.benchmark ?? "";
     case "ann_return":  return stock.annualized_return;
     case "ann_std":     return stock.annualized_std_dev;
     case "sharpe":      return stock.regression_detail?.ratios?.sharpe_ratio ?? 0;
@@ -325,6 +326,7 @@ function AnalysisView({
                     <th className={thClass("ticker")} onClick={() => handleSort("ticker")}>Ticker <SortArrow col="ticker" /></th>
                     <th className={thClass("company")} onClick={() => handleSort("company")}>{itemLabel === "funds" ? "Fund Name" : "Company"} <SortArrow col="company" /></th>
                     <th className={thClass("sector")} onClick={() => handleSort("sector")}>{sectorLabel} <SortArrow col="sector" /></th>
+                    {itemLabel === "funds" && <th className={thClass("benchmark")} onClick={() => handleSort("benchmark")}>Benchmark <SortArrow col="benchmark" /></th>}
                     <th className={thClass("price")} onClick={() => handleSort("price")}>Price <SortArrow col="price" /></th>
                     <th className={thClass("ann_return")} onClick={() => handleSort("ann_return")}>Ann. Return <SortArrow col="ann_return" /></th>
                     <th className={thClass("ann_std")} onClick={() => handleSort("ann_std")}>Ann. Std Dev <SortArrow col="ann_std" /></th>
@@ -339,6 +341,7 @@ function AnalysisView({
                       <TickerCell ticker={s.info.ticker} company={s.info.company} />
                       <td className="company">{s.info.company}</td>
                       <td className="sector">{s.info.sector}</td>
+                      {itemLabel === "funds" && <td className="benchmark-cell">{s.info.benchmark ?? "—"}</td>}
                       <td className="numeric">{s.current_price != null ? usd(s.current_price) : "—"}</td>
                       <td className={`numeric ${colorClass(s.annualized_return)}`}>{pct(s.annualized_return)}</td>
                       <td className="numeric">{pct(s.annualized_std_dev)}</td>
@@ -358,6 +361,7 @@ function AnalysisView({
                     <th className={thClass("ticker")} onClick={() => handleSort("ticker")}>Ticker <SortArrow col="ticker" /></th>
                     <th className={thClass("company")} onClick={() => handleSort("company")}>{itemLabel === "funds" ? "Fund Name" : "Company"} <SortArrow col="company" /></th>
                     <th className={thClass("sector")} onClick={() => handleSort("sector")}>{sectorLabel} <SortArrow col="sector" /></th>
+                    {itemLabel === "funds" && <th className={thClass("benchmark")} onClick={() => handleSort("benchmark")}>Benchmark <SortArrow col="benchmark" /></th>}
                     <th className={thClass("capm_beta")} onClick={() => handleSort("capm_beta")}>Beta <SortArrow col="capm_beta" /></th>
                     <th className={thClass("capm_alpha")} onClick={() => handleSort("capm_alpha")}>Alpha (ann.) <SortArrow col="capm_alpha" /></th>
                     <th className={thClass("capm_er")} onClick={() => handleSort("capm_er")}>Expected Return <SortArrow col="capm_er" /></th>
@@ -370,6 +374,7 @@ function AnalysisView({
                       <TickerCell ticker={s.info.ticker} company={s.info.company} />
                       <td className="company">{s.info.company}</td>
                       <td className="sector">{s.info.sector}</td>
+                      {itemLabel === "funds" && <td className="benchmark-cell">{s.info.benchmark ?? "—"}</td>}
                       <td className="numeric">{num(s.capm.beta)}</td>
                       <td className={`numeric ${colorClass(s.capm.alpha)}`}>{pct(s.capm.alpha)}</td>
                       <td className={`numeric ${colorClass(s.capm.expected_return)}`}>{pct(s.capm.expected_return)}</td>
@@ -385,6 +390,7 @@ function AnalysisView({
                 <thead>
                   <tr>
                     <th className={thClass("ticker")} onClick={() => handleSort("ticker")}>Ticker <SortArrow col="ticker" /></th>
+                    {itemLabel === "funds" && <th className={thClass("benchmark")} onClick={() => handleSort("benchmark")}>Benchmark <SortArrow col="benchmark" /></th>}
                     <th className={thClass("ff6_alpha")} onClick={() => handleSort("ff6_alpha")}>Alpha (ann.) <SortArrow col="ff6_alpha" /></th>
                     <th className={thClass("ff6_mkt")} onClick={() => handleSort("ff6_mkt")}>Mkt <SortArrow col="ff6_mkt" /></th>
                     <th className={thClass("ff6_smb")} onClick={() => handleSort("ff6_smb")}>SMB <SortArrow col="ff6_smb" /></th>
@@ -400,6 +406,7 @@ function AnalysisView({
                   {filtered.map((s) => (
                     <tr key={s.info.ticker}>
                       <TickerCell ticker={s.info.ticker} company={s.info.company} />
+                      {itemLabel === "funds" && <td className="benchmark-cell">{s.info.benchmark ?? "—"}</td>}
                       <td className={`numeric ${colorClass(s.ff6.alpha)}`}>{pct(s.ff6.alpha)}</td>
                       <td className="numeric">{num(s.ff6.beta_mkt)}</td>
                       <td className="numeric">{num(s.ff6.beta_smb)}</td>

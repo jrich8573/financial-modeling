@@ -436,6 +436,12 @@ td.numeric {
   white-space: nowrap;
 }
 
+td.benchmark-cell {
+  color: var(--accent-purple);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
 /* Regression Analysis Tab */
 
 .expandable-row {

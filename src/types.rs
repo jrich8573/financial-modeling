@@ -6,6 +6,8 @@ pub struct StockInfo {
     pub ticker: String,
     pub company: String,
     pub sector: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub benchmark: Option<String>,
 }
 
 #[derive(Debug, Clone)]

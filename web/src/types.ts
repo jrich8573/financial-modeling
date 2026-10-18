@@ -2,6 +2,7 @@ export interface StockInfo {
   ticker: string;
   company: string;
   sector: string;
+  benchmark?: string;
 }
 
 export interface CAPMResult {

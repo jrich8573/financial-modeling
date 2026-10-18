@@ -56,6 +56,7 @@ pub async fn fetch_sp500_constituents(client: &reqwest::Client) -> Result<Vec<St
             ticker,
             company,
             sector,
+            benchmark: None,
         });
     }
 
