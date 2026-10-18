@@ -57,13 +57,10 @@ pub async fn fetch_historical_prices(
     Ok(prices)
 }
 
-/// Fetch total net assets (AUM) for a fund/ETF from Yahoo Finance quote API.
-/// Returns the AUM in dollars, or None if unavailable.
+/// Fetch total net assets (AUM) for a fund/ETF by scraping Yahoo Finance.
+/// The page embeds JSON with totalAssets. Returns AUM in dollars, or None.
 pub async fn fetch_aum(client: &reqwest::Client, ticker: &str) -> Option<f64> {
-    let url = format!(
-        "https://query1.finance.yahoo.com/v8/finance/chart/{}?interval=1d&range=1d",
-        ticker
-    );
+    let url = format!("https://finance.yahoo.com/quote/{}/", ticker);
 
     let resp = client
         .get(&url)
@@ -76,20 +73,20 @@ pub async fn fetch_aum(client: &reqwest::Client, ticker: &str) -> Option<f64> {
         return None;
     }
 
-    let body: serde_json::Value = resp.json().await.ok()?;
-    let meta = &body["chart"]["result"].as_array()?.first()?["meta"];
+    let body = resp.text().await.ok()?;
 
-    // Try totalAssets field (available for ETFs/funds)
-    if let Some(assets) = meta["totalAssets"].as_f64() {
-        if assets > 0.0 {
-            return Some(assets);
-        }
-    }
-
-    // Fallback: try netAssets
-    if let Some(assets) = meta["netAssets"].as_f64() {
-        if assets > 0.0 {
-            return Some(assets);
+    // Look for: totalAssets":{"raw":38353334272,
+    if let Some(pos) = body.find("totalAssets") {
+        let after = &body[pos..];
+        if let Some(raw_start) = after.find("\"raw\":") {
+            let num_start = pos + raw_start + 6; // skip past "raw":
+            let num_str = &body[num_start..];
+            let end = num_str.find(|c: char| !c.is_ascii_digit() && c != '.').unwrap_or(num_str.len());
+            if let Ok(val) = num_str[..end].parse::<f64>() {
+                if val > 0.0 {
+                    return Some(val);
+                }
+            }
         }
     }
 
