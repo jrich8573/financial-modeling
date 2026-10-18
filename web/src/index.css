@@ -436,6 +436,108 @@ td.numeric {
   white-space: nowrap;
 }
 
+/* AUM Tab */
+
+.aum-container {
+  margin-top: 1rem;
+}
+
+.aum-summary {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.aum-category {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.aum-category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.aum-category-header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+}
+
+.aum-category-total {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.aum-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.aum-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.aum-bar-label {
+  min-width: 280px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  flex-shrink: 0;
+}
+
+.aum-ticker {
+  font-weight: 600;
+  color: var(--accent-blue);
+  font-size: 0.8rem;
+  min-width: 60px;
+}
+
+.aum-name {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.aum-bar-track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 22px;
+}
+
+.aum-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  border-radius: 4px;
+  min-width: 2px;
+  transition: width 0.3s ease;
+}
+
+.aum-bar-value {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
 td.benchmark-cell {
   color: var(--accent-purple);
   font-weight: 600;

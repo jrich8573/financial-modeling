@@ -103,4 +103,6 @@ pub struct StockAnalysis {
     pub annualized_std_dev: f64,
     pub annualized_return: f64,
     pub regression_detail: RegressionDetail,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub aum: Option<f64>,
 }

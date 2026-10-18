@@ -3,7 +3,7 @@ import type { StockAnalysis, DetailedRegressionResult } from "./types";
 import "./App.css";
 
 type Page = "sp500" | "dfa";
-type Tab = "summary" | "capm" | "ff6" | "regression" | "dictionary";
+type Tab = "summary" | "capm" | "ff6" | "regression" | "aum" | "dictionary";
 type SortDir = "asc" | "desc";
 interface SortState {
   key: string;
@@ -40,6 +40,14 @@ function TickerCell({ ticker, company }: { ticker: string; company: string }) {
       </a>
     </td>
   );
+}
+
+function formatAum(v: number): string {
+  if (v >= 1e12) return "$" + (v / 1e12).toFixed(2) + "T";
+  if (v >= 1e9) return "$" + (v / 1e9).toFixed(2) + "B";
+  if (v >= 1e6) return "$" + (v / 1e6).toFixed(1) + "M";
+  if (v >= 1e3) return "$" + (v / 1e3).toFixed(0) + "K";
+  return "$" + v.toFixed(0);
 }
 
 function sigStars(p: number): string {
@@ -294,6 +302,11 @@ function AnalysisView({
         <button className={`tab ${tab === "regression" ? "active" : ""}`} onClick={() => setTab("regression")}>
           Regression Analysis
         </button>
+        {itemLabel === "funds" && (
+          <button className={`tab ${tab === "aum" ? "active" : ""}`} onClick={() => setTab("aum")}>
+            AUM
+          </button>
+        )}
         <button className={`tab ${tab === "dictionary" ? "active" : ""}`} onClick={() => setTab("dictionary")}>
           Data Dictionary
         </button>
@@ -301,7 +314,9 @@ function AnalysisView({
 
       {tab === "dictionary" && <DataDictionary />}
 
-      {tab !== "dictionary" && (
+      {tab === "aum" && data && <AumTab data={filtered} />}
+
+      {tab !== "dictionary" && tab !== "aum" && (
         <>
           <div className="search-bar">
             <input
@@ -476,6 +491,87 @@ function AnalysisView({
         </>
       )}
     </>
+  );
+}
+
+function AumTab({ data }: { data: StockAnalysis[] }) {
+  const fundsWithAum = data.filter((d) => d.aum && d.aum > 0);
+
+  if (fundsWithAum.length === 0) {
+    return (
+      <div className="aum-container">
+        <p className="subtitle">No AUM data available. AUM data is fetched from Yahoo Finance for ETFs and mutual funds.</p>
+      </div>
+    );
+  }
+
+  // Group by category
+  const categories = new Map<string, StockAnalysis[]>();
+  for (const fund of fundsWithAum) {
+    const cat = fund.info.sector;
+    if (!categories.has(cat)) categories.set(cat, []);
+    categories.get(cat)!.push(fund);
+  }
+
+  // Sort categories by total AUM descending
+  const sortedCategories = Array.from(categories.entries())
+    .map(([cat, funds]) => ({
+      category: cat,
+      funds: funds.sort((a, b) => (b.aum ?? 0) - (a.aum ?? 0)),
+      totalAum: funds.reduce((sum, f) => sum + (f.aum ?? 0), 0),
+    }))
+    .sort((a, b) => b.totalAum - a.totalAum);
+
+  const maxAum = Math.max(...fundsWithAum.map((f) => f.aum ?? 0));
+  const totalAum = fundsWithAum.reduce((sum, f) => sum + (f.aum ?? 0), 0);
+
+  return (
+    <div className="aum-container">
+      <div className="aum-summary">
+        <div className="stat-card">
+          <div className="label">Total AUM</div>
+          <div className="value">{formatAum(totalAum)}</div>
+        </div>
+        <div className="stat-card">
+          <div className="label">Funds with AUM</div>
+          <div className="value">{fundsWithAum.length}</div>
+        </div>
+        <div className="stat-card">
+          <div className="label">Categories</div>
+          <div className="value">{sortedCategories.length}</div>
+        </div>
+      </div>
+
+      {sortedCategories.map(({ category, funds, totalAum: catTotal }) => (
+        <div key={category} className="aum-category">
+          <div className="aum-category-header">
+            <h3>{category}</h3>
+            <span className="aum-category-total">{formatAum(catTotal)}</span>
+          </div>
+          <div className="aum-chart">
+            {funds.map((fund) => {
+              const aum = fund.aum ?? 0;
+              const widthPct = (aum / maxAum) * 100;
+              return (
+                <div key={fund.info.ticker} className="aum-bar-row">
+                  <div className="aum-bar-label">
+                    <span className="aum-ticker">{fund.info.ticker}</span>
+                    <span className="aum-name">{fund.info.company}</span>
+                  </div>
+                  <div className="aum-bar-track">
+                    <div
+                      className="aum-bar-fill"
+                      style={{ width: `${Math.max(widthPct, 0.5)}%` }}
+                    />
+                    <span className="aum-bar-value">{formatAum(aum)}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }
 

@@ -237,5 +237,6 @@ pub fn compute_stock_analysis(
         annualized_std_dev,
         annualized_return,
         regression_detail,
+        aum: None,
     })
 }

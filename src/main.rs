@@ -98,16 +98,16 @@ async fn main() -> Result<()> {
         .build()?;
 
     // Step 1: Fetch S&P 500 constituents
-    println!("[1/5] Fetching S&P 500 constituent list...");
+    println!("[1/6] Fetching S&P 500 constituent list...");
     let stocks = sp500::fetch_sp500_constituents(&client).await?;
 
     // Step 2: Load DFA fund list
-    println!("[2/5] Loading DFA fund list...");
+    println!("[2/6] Loading DFA fund list...");
     let dfa = dfa_funds::get_dfa_funds();
     println!("  Loaded {} DFA funds", dfa.len());
 
     // Step 3: Fetch Fama-French factor data
-    println!("[3/5] Downloading Fama-French factor data...");
+    println!("[3/6] Downloading Fama-French factor data...");
     let factors = factors::fetch_factor_data(&client).await?;
     let factors = Arc::new(factors);
 
@@ -115,12 +115,26 @@ async fn main() -> Result<()> {
     let client = Arc::new(client);
 
     // Step 4: Analyze S&P 500 stocks
-    println!("[4/5] Analyzing S&P 500 stocks...");
+    println!("[4/6] Analyzing S&P 500 stocks...");
     let stock_analyses = analyze_securities("stocks", stocks, &factors, &client, &semaphore).await;
 
     // Step 5: Analyze DFA funds
-    println!("[5/5] Analyzing DFA funds...");
-    let dfa_analyses = analyze_securities("funds", dfa, &factors, &client, &semaphore).await;
+    println!("[5/6] Analyzing DFA funds...");
+    let mut dfa_analyses = analyze_securities("funds", dfa, &factors, &client, &semaphore).await;
+
+    // Step 6: Fetch AUM for DFA funds
+    println!("[6/6] Fetching AUM data for DFA funds...");
+    {
+        let mut aum_count = 0usize;
+        for analysis in &mut dfa_analyses {
+            let _permit = semaphore.acquire().await.unwrap();
+            if let Some(aum) = stock_data::fetch_aum(&client, &analysis.info.ticker).await {
+                analysis.aum = Some(aum);
+                aum_count += 1;
+            }
+        }
+        println!("  Retrieved AUM for {} of {} funds\n", aum_count, dfa_analyses.len());
+    }
 
     // Print S&P 500 tables
     println!("\n--- S&P 500 Results ---\n");

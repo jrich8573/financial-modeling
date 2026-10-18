@@ -67,4 +67,5 @@ export interface StockAnalysis {
   annualized_std_dev: number;
   annualized_return: number;
   regression_detail: RegressionDetail;
+  aum?: number;
 }

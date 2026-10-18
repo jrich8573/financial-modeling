@@ -57,6 +57,45 @@ pub async fn fetch_historical_prices(
     Ok(prices)
 }
 
+/// Fetch total net assets (AUM) for a fund/ETF from Yahoo Finance quote API.
+/// Returns the AUM in dollars, or None if unavailable.
+pub async fn fetch_aum(client: &reqwest::Client, ticker: &str) -> Option<f64> {
+    let url = format!(
+        "https://query1.finance.yahoo.com/v8/finance/chart/{}?interval=1d&range=1d",
+        ticker
+    );
+
+    let resp = client
+        .get(&url)
+        .header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)")
+        .send()
+        .await
+        .ok()?;
+
+    if !resp.status().is_success() {
+        return None;
+    }
+
+    let body: serde_json::Value = resp.json().await.ok()?;
+    let meta = &body["chart"]["result"].as_array()?.first()?["meta"];
+
+    // Try totalAssets field (available for ETFs/funds)
+    if let Some(assets) = meta["totalAssets"].as_f64() {
+        if assets > 0.0 {
+            return Some(assets);
+        }
+    }
+
+    // Fallback: try netAssets
+    if let Some(assets) = meta["netAssets"].as_f64() {
+        if assets > 0.0 {
+            return Some(assets);
+        }
+    }
+
+    None
+}
+
 pub fn compute_returns(prices: &[PriceRecord]) -> Vec<ReturnRecord> {
     prices
         .windows(2)
