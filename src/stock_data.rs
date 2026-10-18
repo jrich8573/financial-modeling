@@ -75,16 +75,20 @@ pub async fn fetch_aum(client: &reqwest::Client, ticker: &str) -> Option<f64> {
 
     let body = resp.text().await.ok()?;
 
-    // Look for: totalAssets":{"raw":38353334272,
-    if let Some(pos) = body.find("totalAssets") {
-        let after = &body[pos..];
-        if let Some(raw_start) = after.find("\"raw\":") {
-            let num_start = pos + raw_start + 6; // skip past "raw":
+    // The page embeds JSON with totalAssets. The quotes may be escaped as \" in
+    // the HTML (e.g. totalAssets\":{\"raw\":38353334272). Search for both forms.
+    for needle in &["totalAssets\":{\"raw\":", "totalAssets\\\":{\\\"raw\\\":"] {
+        if let Some(pos) = body.find(needle) {
+            let num_start = pos + needle.len();
             let num_str = &body[num_start..];
-            let end = num_str.find(|c: char| !c.is_ascii_digit() && c != '.').unwrap_or(num_str.len());
-            if let Ok(val) = num_str[..end].parse::<f64>() {
-                if val > 0.0 {
-                    return Some(val);
+            let end = num_str
+                .find(|c: char| !c.is_ascii_digit() && c != '.')
+                .unwrap_or(num_str.len());
+            if end > 0 {
+                if let Ok(val) = num_str[..end].parse::<f64>() {
+                    if val > 0.0 {
+                        return Some(val);
+                    }
                 }
             }
         }
