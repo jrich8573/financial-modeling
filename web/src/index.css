@@ -436,6 +436,10 @@ td.numeric {
   white-space: nowrap;
 }
 
+.analytics-container {
+  margin-top: 1rem;
+}
+
 /* AUM Tab */
 
 .aum-container {

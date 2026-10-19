@@ -59,6 +59,47 @@ export interface RegressionDetail {
   ratios: RatioStats;
 }
 
+export interface AnnualRevenue {
+  year: string;
+  avg_aum: number | null;
+  year_end_tna: number | null;
+  net_flow: number | null;
+  market_effect: number | null;
+  mgmt_fee_pct: number | null;
+  exp_ratio_pct: number | null;
+  rev_mgmt_fee: number | null;
+  rev_total_expense: number | null;
+  months: number | null;
+}
+
+export interface FundAnalytics {
+  ticker: string;
+  fund_name: string;
+  vehicle: string;
+  benchmark: string;
+  first_offer_dt: string;
+  latest_tna: number | null;
+  mgmt_fee_pct: number | null;
+  gross_expense_ratio_pct: number | null;
+  waiver_pct: number | null;
+  net_expense_ratio_pct: number | null;
+  fee_after_waiver_pct: number | null;
+  sharpe_ratio: number | null;
+  max_drawdown: number | null;
+  annualized_return_1yr: number | null;
+  annualized_return_3yr: number | null;
+  annualized_return_5yr: number | null;
+  annualized_return_10yr: number | null;
+  std_dev_1yr: number | null;
+  std_dev_3yr: number | null;
+  std_dev_5yr: number | null;
+  std_dev_10yr: number | null;
+  total_months: number;
+  annual_revenue: AnnualRevenue[];
+  lifetime_rev_mgmt_fee: number | null;
+  lifetime_rev_total_expense: number | null;
+}
+
 export interface StockAnalysis {
   info: StockInfo;
   current_price: number;

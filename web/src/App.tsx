@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import type { StockAnalysis, DetailedRegressionResult } from "./types";
+import type { StockAnalysis, DetailedRegressionResult, FundAnalytics } from "./types";
 import "./App.css";
 
 type Page = "sp500" | "dfa";
-type Tab = "summary" | "capm" | "ff6" | "regression" | "aum" | "dictionary";
+type Tab = "summary" | "capm" | "ff6" | "regression" | "aum" | "analytics" | "dictionary";
 type SortDir = "asc" | "desc";
 interface SortState {
   key: string;
@@ -100,6 +100,7 @@ function App() {
   const [dfaData, setDfaData] = useState<StockAnalysis[] | null>(null);
   const [sp500Error, setSp500Error] = useState<string | null>(null);
   const [dfaError, setDfaError] = useState<string | null>(null);
+  const [fundAnalytics, setFundAnalytics] = useState<FundAnalytics[] | null>(null);
 
   useEffect(() => {
     fetch("/data.json")
@@ -111,6 +112,11 @@ function App() {
       .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then(setDfaData)
       .catch((e) => setDfaError(e.message));
+
+    fetch("/fund_analytics.json")
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then(setFundAnalytics)
+      .catch(() => {}); // optional data, don't error
   }, []);
 
   return (
@@ -138,6 +144,7 @@ function App() {
           error={sp500Error}
           itemLabel="stocks"
           sectorLabel="Sector"
+          fundAnalytics={null}
         />
       )}
 
@@ -149,6 +156,7 @@ function App() {
           error={dfaError}
           itemLabel="funds"
           sectorLabel="Category"
+          fundAnalytics={fundAnalytics}
         />
       )}
     </>
@@ -162,6 +170,7 @@ function AnalysisView({
   error,
   itemLabel,
   sectorLabel,
+  fundAnalytics,
 }: {
   title: string;
   subtitle: string;
@@ -169,6 +178,7 @@ function AnalysisView({
   error: string | null;
   itemLabel: string;
   sectorLabel: string;
+  fundAnalytics?: FundAnalytics[] | null;
 }) {
   const [tab, setTab] = useState<Tab>("summary");
   const [search, setSearch] = useState("");
@@ -307,6 +317,11 @@ function AnalysisView({
             AUM
           </button>
         )}
+        {fundAnalytics && fundAnalytics.length > 0 && (
+          <button className={`tab ${tab === "analytics" ? "active" : ""}`} onClick={() => setTab("analytics")}>
+            Fund Analytics
+          </button>
+        )}
         <button className={`tab ${tab === "dictionary" ? "active" : ""}`} onClick={() => setTab("dictionary")}>
           Data Dictionary
         </button>
@@ -316,7 +331,9 @@ function AnalysisView({
 
       {tab === "aum" && data && <AumTab data={filtered} />}
 
-      {tab !== "dictionary" && tab !== "aum" && (
+      {tab === "analytics" && fundAnalytics && <FundAnalyticsTab data={fundAnalytics} />}
+
+      {tab !== "dictionary" && tab !== "aum" && tab !== "analytics" && (
         <>
           <div className="search-bar">
             <input
@@ -491,6 +508,210 @@ function AnalysisView({
         </>
       )}
     </>
+  );
+}
+
+function FundAnalyticsTab({ data }: { data: FundAnalytics[] }) {
+  const [expandedTicker, setExpandedTicker] = useState<string | null>(null);
+  const [sortKey, setSortKey] = useState("ticker");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
+
+  const handleSort = (key: string) => {
+    if (sortKey === key) {
+      setSortDir(sortDir === "asc" ? "desc" : "asc");
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
+    }
+  };
+
+  const sorted = useMemo(() => {
+    return [...data].sort((a, b) => {
+      const getVal = (d: FundAnalytics): string | number => {
+        switch (sortKey) {
+          case "ticker": return d.ticker;
+          case "fund_name": return d.fund_name;
+          case "vehicle": return d.vehicle;
+          case "benchmark": return d.benchmark;
+          case "sharpe": return d.sharpe_ratio ?? -999;
+          case "max_dd": return d.max_drawdown ?? -999;
+          case "ret_1yr": return d.annualized_return_1yr ?? -999;
+          case "ret_3yr": return d.annualized_return_3yr ?? -999;
+          case "ret_5yr": return d.annualized_return_5yr ?? -999;
+          case "ret_10yr": return d.annualized_return_10yr ?? -999;
+          case "std_5yr": return d.std_dev_5yr ?? -999;
+          case "mgmt_fee": return d.mgmt_fee_pct ?? -999;
+          case "fee_after": return d.fee_after_waiver_pct ?? -999;
+          case "tna": return d.latest_tna ?? -999;
+          default: return "";
+        }
+      };
+      const av = getVal(a), bv = getVal(b);
+      let cmp = typeof av === "number" && typeof bv === "number" ? av - bv : String(av).localeCompare(String(bv));
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+  }, [data, sortKey, sortDir]);
+
+  const SortArrow = ({ col }: { col: string }) => (
+    <span className="sort-arrow">
+      {sortKey === col ? (sortDir === "asc" ? "\u25B2" : "\u25BC") : "\u25B2"}
+    </span>
+  );
+  const thCls = (col: string) => (sortKey === col ? "sorted" : "");
+
+  const fmtPct = (v: number | null) => v != null ? (v * 100).toFixed(2) + "%" : "—";
+  const fmtBps = (v: number | null) => v != null ? (v * 100).toFixed(2) + "%" : "—";
+
+  return (
+    <div className="analytics-container">
+      <div className="table-container" style={{ borderRadius: "10px", borderTop: "1px solid var(--border)" }}>
+        <table>
+          <thead>
+            <tr>
+              <th className={thCls("ticker")} onClick={() => handleSort("ticker")}>Ticker <SortArrow col="ticker" /></th>
+              <th className={thCls("fund_name")} onClick={() => handleSort("fund_name")}>Fund <SortArrow col="fund_name" /></th>
+              <th className={thCls("vehicle")} onClick={() => handleSort("vehicle")}>Type <SortArrow col="vehicle" /></th>
+              <th className={thCls("benchmark")} onClick={() => handleSort("benchmark")}>Benchmark <SortArrow col="benchmark" /></th>
+              <th className={thCls("sharpe")} onClick={() => handleSort("sharpe")}>Sharpe <SortArrow col="sharpe" /></th>
+              <th className={thCls("max_dd")} onClick={() => handleSort("max_dd")}>Max DD <SortArrow col="max_dd" /></th>
+              <th className={thCls("ret_1yr")} onClick={() => handleSort("ret_1yr")}>1Y Ret <SortArrow col="ret_1yr" /></th>
+              <th className={thCls("ret_3yr")} onClick={() => handleSort("ret_3yr")}>3Y Ret <SortArrow col="ret_3yr" /></th>
+              <th className={thCls("ret_5yr")} onClick={() => handleSort("ret_5yr")}>5Y Ret <SortArrow col="ret_5yr" /></th>
+              <th className={thCls("ret_10yr")} onClick={() => handleSort("ret_10yr")}>10Y Ret <SortArrow col="ret_10yr" /></th>
+              <th className={thCls("std_5yr")} onClick={() => handleSort("std_5yr")}>5Y StdDev <SortArrow col="std_5yr" /></th>
+              <th className={thCls("mgmt_fee")} onClick={() => handleSort("mgmt_fee")}>Mgmt Fee <SortArrow col="mgmt_fee" /></th>
+              <th className={thCls("fee_after")} onClick={() => handleSort("fee_after")}>Net ER <SortArrow col="fee_after" /></th>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((f) => {
+              const isExpanded = expandedTicker === f.ticker;
+              return (
+                <>
+                  <tr
+                    key={f.ticker}
+                    className={`expandable-row ${isExpanded ? "expanded" : ""}`}
+                    onClick={() => setExpandedTicker(isExpanded ? null : f.ticker)}
+                  >
+                    <td className="ticker">
+                      <span className="expand-icon">{isExpanded ? "\u25BC" : "\u25B6"}</span>
+                      {" "}{f.ticker}
+                    </td>
+                    <td className="company">{f.fund_name}</td>
+                    <td className="sector">{f.vehicle}</td>
+                    <td className="benchmark-cell">{f.benchmark}</td>
+                    <td className={`numeric ${colorClass(f.sharpe_ratio ?? 0)}`}>{f.sharpe_ratio != null ? f.sharpe_ratio.toFixed(3) : "—"}</td>
+                    <td className="numeric negative">{fmtPct(f.max_drawdown)}</td>
+                    <td className={`numeric ${colorClass(f.annualized_return_1yr ?? 0)}`}>{fmtPct(f.annualized_return_1yr)}</td>
+                    <td className={`numeric ${colorClass(f.annualized_return_3yr ?? 0)}`}>{fmtPct(f.annualized_return_3yr)}</td>
+                    <td className={`numeric ${colorClass(f.annualized_return_5yr ?? 0)}`}>{fmtPct(f.annualized_return_5yr)}</td>
+                    <td className={`numeric ${colorClass(f.annualized_return_10yr ?? 0)}`}>{fmtPct(f.annualized_return_10yr)}</td>
+                    <td className="numeric">{fmtPct(f.std_dev_5yr)}</td>
+                    <td className="numeric">{fmtBps(f.mgmt_fee_pct)}</td>
+                    <td className="numeric">{fmtBps(f.fee_after_waiver_pct)}</td>
+                  </tr>
+                  {isExpanded && (
+                    <tr key={f.ticker + "-detail"} className="detail-row">
+                      <td colSpan={13}>
+                        <div className="regression-detail">
+                          <div className="ratio-cards">
+                            <div className="ratio-card">
+                              <div className="label">Latest TNA</div>
+                              <div className="value">{f.latest_tna ? formatAum(f.latest_tna) : "—"}</div>
+                            </div>
+                            <div className="ratio-card">
+                              <div className="label">Lifetime Mgmt Rev</div>
+                              <div className="value">{f.lifetime_rev_mgmt_fee ? formatAum(f.lifetime_rev_mgmt_fee) : "—"}</div>
+                            </div>
+                            <div className="ratio-card">
+                              <div className="label">Lifetime Total Rev</div>
+                              <div className="value">{f.lifetime_rev_total_expense ? formatAum(f.lifetime_rev_total_expense) : "—"}</div>
+                            </div>
+                            <div className="ratio-card">
+                              <div className="label">Data Since</div>
+                              <div className="value">{f.first_offer_dt}</div>
+                            </div>
+                            <div className="ratio-card">
+                              <div className="label">Total Months</div>
+                              <div className="value">{f.total_months}</div>
+                            </div>
+                          </div>
+
+                          <div className="model-card">
+                            <h3>Annualized Performance & Risk</h3>
+                            <table className="coeff-table">
+                              <thead>
+                                <tr>
+                                  <th>Period</th>
+                                  <th>Ann. Return</th>
+                                  <th>Std Dev</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr><td className="predictor-name">1 Year</td><td className={`numeric ${colorClass(f.annualized_return_1yr ?? 0)}`}>{fmtPct(f.annualized_return_1yr)}</td><td className="numeric">{fmtPct(f.std_dev_1yr)}</td></tr>
+                                <tr><td className="predictor-name">3 Year</td><td className={`numeric ${colorClass(f.annualized_return_3yr ?? 0)}`}>{fmtPct(f.annualized_return_3yr)}</td><td className="numeric">{fmtPct(f.std_dev_3yr)}</td></tr>
+                                <tr><td className="predictor-name">5 Year</td><td className={`numeric ${colorClass(f.annualized_return_5yr ?? 0)}`}>{fmtPct(f.annualized_return_5yr)}</td><td className="numeric">{fmtPct(f.std_dev_5yr)}</td></tr>
+                                <tr><td className="predictor-name">10 Year</td><td className={`numeric ${colorClass(f.annualized_return_10yr ?? 0)}`}>{fmtPct(f.annualized_return_10yr)}</td><td className="numeric">{fmtPct(f.std_dev_10yr)}</td></tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div className="model-card">
+                            <h3>Fee Structure</h3>
+                            <div className="stat-grid">
+                              <span className="stat-label">Management Fee</span><span className="stat-val">{fmtBps(f.mgmt_fee_pct)}</span>
+                              <span className="stat-label">Gross Expense Ratio</span><span className="stat-val">{fmtBps(f.gross_expense_ratio_pct)}</span>
+                              <span className="stat-label">Waiver</span><span className="stat-val">{fmtBps(f.waiver_pct)}</span>
+                              <span className="stat-label">Net Expense Ratio</span><span className="stat-val">{fmtBps(f.net_expense_ratio_pct)}</span>
+                            </div>
+                          </div>
+
+                          {f.annual_revenue.length > 0 && (
+                            <div className="model-card">
+                              <h3>Annual Revenue</h3>
+                              <div style={{ overflowX: "auto" }}>
+                                <table className="coeff-table">
+                                  <thead>
+                                    <tr>
+                                      <th>Year</th>
+                                      <th>Avg AUM</th>
+                                      <th>Year-End TNA</th>
+                                      <th>Net Flow</th>
+                                      <th>Mgmt Fee Rev</th>
+                                      <th>Total Exp Rev</th>
+                                      <th>Mgmt Fee %</th>
+                                      <th>ER %</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {f.annual_revenue.filter(r => r.months && r.months >= 6).slice(-15).map((r) => (
+                                      <tr key={r.year}>
+                                        <td className="predictor-name">{r.year}</td>
+                                        <td className="numeric">{r.avg_aum ? formatAum(r.avg_aum) : "—"}</td>
+                                        <td className="numeric">{r.year_end_tna ? formatAum(r.year_end_tna) : "—"}</td>
+                                        <td className={`numeric ${colorClass(r.net_flow ?? 0)}`}>{r.net_flow ? formatAum(r.net_flow) : "—"}</td>
+                                        <td className="numeric">{r.rev_mgmt_fee ? formatAum(r.rev_mgmt_fee) : "—"}</td>
+                                        <td className="numeric">{r.rev_total_expense ? formatAum(r.rev_total_expense) : "—"}</td>
+                                        <td className="numeric">{r.mgmt_fee_pct != null ? (r.mgmt_fee_pct * 100).toFixed(3) + "%" : "—"}</td>
+                                        <td className="numeric">{r.exp_ratio_pct != null ? (r.exp_ratio_pct * 100).toFixed(3) + "%" : "—"}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
