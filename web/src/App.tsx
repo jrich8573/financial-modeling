@@ -243,6 +243,16 @@ function AnalysisView({
     return filtered.reduce((s, d) => s + d.annualized_std_dev, 0) / filtered.length;
   }, [filtered]);
 
+  const avgCAPMAlpha = useMemo(() => {
+    if (!filtered.length) return 0;
+    return filtered.reduce((s, d) => s + d.capm.alpha, 0) / filtered.length;
+  }, [filtered]);
+
+  const avgFF6Alpha = useMemo(() => {
+    if (!filtered.length) return 0;
+    return filtered.reduce((s, d) => s + d.ff6.alpha, 0) / filtered.length;
+  }, [filtered]);
+
   if (error) {
     return (
       <div className="error">
@@ -296,6 +306,14 @@ function AnalysisView({
         <div className="stat-card">
           <div className="label">Avg Volatility</div>
           <div className="value">{pct(avgStdDev)}</div>
+        </div>
+        <div className="stat-card">
+          <div className="label">Avg CAPM Alpha</div>
+          <div className={`value ${colorClass(avgCAPMAlpha)}`}>{pct(avgCAPMAlpha)}</div>
+        </div>
+        <div className="stat-card">
+          <div className="label">Avg FF6 Alpha</div>
+          <div className={`value ${colorClass(avgFF6Alpha)}`}>{pct(avgFF6Alpha)}</div>
         </div>
       </div>
 
