@@ -95,7 +95,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["cd /opt/financial-models && docker compose pull && docker compose up -d --force-recreate && echo DEPLOY_COMPLETE"]' \
+            --parameters 'commands=["set -ex","GHCR_TOKEN=$(aws secretsmanager get-secret-value --region us-east-1 --secret-id financial-models/ghcr-token --query SecretString --output text)","echo $GHCR_TOKEN | docker login ghcr.io -u jrich8573 --password-stdin","cd /opt/financial-models","docker compose pull","docker compose up -d --force-recreate","echo DEPLOY_COMPLETE"]' \
             --query 'Command.CommandId' \
             --output text)
 
