@@ -26,7 +26,7 @@ jobs:
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["cd /opt/financial-models && docker compose restart backend && echo DATA_REFRESH_STARTED"]' \
+            --parameters 'commands=["cd /opt/financial-models && docker compose -f docker-compose.prod.yml pull backend && docker compose -f docker-compose.prod.yml up -d --force-recreate backend && echo DATA_REFRESH_STARTED"]' \
             --query 'Command.CommandId' \
             --output text)
 
