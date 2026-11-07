@@ -19,7 +19,7 @@ services:
           memory: 512M
 
   backend:
-    image: ghcr.io/jrich8573/financial-modeling/backend:latest
+    image: ghcr.io/jrich8573/financial-models/backend:latest
     restart: on-failure
     environment:
       DATABASE_URL: postgres://finmodels:__DB_PASSWORD__@db:5432/financial_models
@@ -34,7 +34,7 @@ services:
           memory: 512M
 
   web:
-    image: ghcr.io/jrich8573/financial-modeling/web:latest
+    image: ghcr.io/jrich8573/financial-models/web:latest
     restart: unless-stopped
     ports:
       - "80:80"
