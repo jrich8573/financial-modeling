@@ -658,6 +658,14 @@ td.benchmark-cell {
   position: static;
 }
 
+.coeff-table thead th:nth-child(n+2):nth-child(-n+5) {
+  text-align: right;
+}
+
+.coeff-table thead th:nth-child(6) {
+  text-align: center;
+}
+
 .coeff-table thead th:hover {
   color: var(--text-muted);
 }
