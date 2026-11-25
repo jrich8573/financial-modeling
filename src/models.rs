@@ -7,6 +7,9 @@ use crate::types::{
     RegressionDetail, ReturnRecord, StockAnalysis, StockInfo,
 };
 
+/// Approximate number of trading days per year, used to annualize daily returns and risk metrics.
+const TRADING_DAYS_PER_YEAR: f64 = 252.0;
+
 fn build_detailed_result(
     ols: &OLSResult,
     model_name: &str,
@@ -87,10 +90,10 @@ pub fn compute_stock_analysis(
     let avg_mkt_rf = mkt_rf.iter().sum::<f64>() / mkt_rf.len() as f64;
     let avg_rf = rf_values.iter().sum::<f64>() / rf_values.len() as f64;
 
-    let capm_expected_return = (avg_rf + capm_beta * avg_mkt_rf) * 252.0;
+    let capm_expected_return = (avg_rf + capm_beta * avg_mkt_rf) * TRADING_DAYS_PER_YEAR;
 
     let capm = CAPMResult {
-        alpha: capm_alpha * 252.0,
+        alpha: capm_alpha * TRADING_DAYS_PER_YEAR,
         beta: capm_beta,
         expected_return: capm_expected_return,
         r_squared: capm_result.r_squared,
@@ -122,10 +125,10 @@ pub fn compute_stock_analysis(
         + ff6_beta_rmw * avg_rmw
         + ff6_beta_cma * avg_cma
         + ff6_beta_mom * avg_mom)
-        * 252.0;
+        * TRADING_DAYS_PER_YEAR;
 
     let ff6 = FF6Result {
-        alpha: ff6_alpha * 252.0,
+        alpha: ff6_alpha * TRADING_DAYS_PER_YEAR,
         beta_mkt: ff6_beta_mkt,
         beta_smb: ff6_beta_smb,
         beta_hml: ff6_beta_hml,
@@ -145,10 +148,10 @@ pub fn compute_stock_analysis(
         .map(|r| (r - mean_return).powi(2))
         .sum::<f64>()
         / (daily_returns.len() as f64 - 1.0);
-    let annualized_std_dev = variance.sqrt() * (252.0_f64).sqrt();
+    let annualized_std_dev = variance.sqrt() * TRADING_DAYS_PER_YEAR.sqrt();
 
     let total_return: f64 = daily_returns.iter().map(|r| 1.0 + r).product();
-    let annualized_return = total_return.powf(252.0 / daily_returns.len() as f64) - 1.0;
+    let annualized_return = total_return.powf(TRADING_DAYS_PER_YEAR / daily_returns.len() as f64) - 1.0;
 
     // ===== Detailed regressions for the new tab =====
 
@@ -186,7 +189,7 @@ pub fn compute_stock_analysis(
 
     // ===== Ratios =====
 
-    let annualized_rf = avg_rf * 252.0;
+    let annualized_rf = avg_rf * TRADING_DAYS_PER_YEAR;
     let sharpe_ratio = if annualized_std_dev > 0.0 {
         (annualized_return - annualized_rf) / annualized_std_dev
     } else {
@@ -207,10 +210,10 @@ pub fn compute_stock_analysis(
         .map(|r| (r - resid_mean).powi(2))
         .sum::<f64>()
         / (n_aligned as f64 - 1.0);
-    let tracking_error = resid_var.sqrt() * (252.0_f64).sqrt();
+    let tracking_error = resid_var.sqrt() * TRADING_DAYS_PER_YEAR.sqrt();
 
     let information_ratio = if tracking_error > 0.0 {
-        (capm_alpha * 252.0) / tracking_error
+        (capm_alpha * TRADING_DAYS_PER_YEAR) / tracking_error
     } else {
         0.0
     };

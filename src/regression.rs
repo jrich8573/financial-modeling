@@ -152,3 +152,79 @@ pub fn ols_regression(y: &[f64], x_columns: &[&[f64]]) -> Option<OLSResult> {
         df_residual,
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn approx_eq(a: f64, b: f64, tol: f64) -> bool {
+        (a - b).abs() < tol
+    }
+
+    #[test]
+    fn test_simple_linear_regression() {
+        // y = 2 + 3*x (perfect fit)
+        let x = vec![1.0, 2.0, 3.0, 4.0, 5.0];
+        let y: Vec<f64> = x.iter().map(|&xi| 2.0 + 3.0 * xi).collect();
+
+        let result = ols_regression(&y, &[&x]).expect("regression should succeed");
+
+        assert!(approx_eq(result.coefficients[0], 2.0, 1e-6), "intercept should be ~2.0, got {}", result.coefficients[0]);
+        assert!(approx_eq(result.coefficients[1], 3.0, 1e-6), "slope should be ~3.0, got {}", result.coefficients[1]);
+        assert!(approx_eq(result.r_squared, 1.0, 1e-6), "R² should be ~1.0 for perfect fit, got {}", result.r_squared);
+        assert_eq!(result.n_observations, 5);
+        assert_eq!(result.df_model, 1);
+        assert_eq!(result.df_residual, 3);
+    }
+
+    #[test]
+    fn test_multiple_regression() {
+        // y = 1 + 2*x1 + 3*x2
+        let x1 = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+        let x2 = vec![2.0, 1.0, 3.0, 2.0, 4.0, 3.0];
+        let y: Vec<f64> = x1.iter().zip(x2.iter()).map(|(&a, &b)| 1.0 + 2.0 * a + 3.0 * b).collect();
+
+        let result = ols_regression(&y, &[&x1, &x2]).expect("regression should succeed");
+
+        assert!(approx_eq(result.coefficients[0], 1.0, 1e-6), "intercept should be ~1.0");
+        assert!(approx_eq(result.coefficients[1], 2.0, 1e-6), "beta_x1 should be ~2.0");
+        assert!(approx_eq(result.coefficients[2], 3.0, 1e-6), "beta_x2 should be ~3.0");
+        assert!(approx_eq(result.r_squared, 1.0, 1e-6));
+        assert_eq!(result.df_model, 2);
+    }
+
+    #[test]
+    fn test_regression_with_noise() {
+        // y ≈ 1 + 2*x with some noise
+        let x = vec![1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0];
+        let noise = vec![0.1, -0.2, 0.15, -0.1, 0.05, -0.15, 0.2, -0.05, 0.1, -0.1];
+        let y: Vec<f64> = x.iter().zip(noise.iter()).map(|(&xi, &ni)| 1.0 + 2.0 * xi + ni).collect();
+
+        let result = ols_regression(&y, &[&x]).expect("regression should succeed");
+
+        assert!(approx_eq(result.coefficients[0], 1.0, 0.5), "intercept should be near 1.0");
+        assert!(approx_eq(result.coefficients[1], 2.0, 0.1), "slope should be near 2.0");
+        assert!(result.r_squared > 0.99, "R² should be high, got {}", result.r_squared);
+    }
+
+    #[test]
+    fn test_too_few_observations() {
+        let x = vec![1.0];
+        let y = vec![2.0];
+        assert!(ols_regression(&y, &[&x]).is_none(), "should fail with n <= k+1");
+    }
+
+    #[test]
+    fn test_empty_input() {
+        let y: Vec<f64> = vec![];
+        let x: Vec<f64> = vec![];
+        assert!(ols_regression(&y, &[&x]).is_none());
+    }
+
+    #[test]
+    fn test_mismatched_lengths() {
+        let y = vec![1.0, 2.0, 3.0];
+        let x = vec![1.0, 2.0];
+        assert!(ols_regression(&y, &[&x]).is_none());
+    }
+}

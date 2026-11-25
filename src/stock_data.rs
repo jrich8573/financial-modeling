@@ -114,3 +114,53 @@ pub fn compute_returns(prices: &[PriceRecord]) -> Vec<ReturnRecord> {
         })
         .collect()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use chrono::NaiveDate;
+
+    fn date(y: i32, m: u32, d: u32) -> NaiveDate {
+        NaiveDate::from_ymd_opt(y, m, d).unwrap()
+    }
+
+    #[test]
+    fn test_basic_returns() {
+        let prices = vec![
+            PriceRecord { date: date(2024, 1, 1), close: 100.0 },
+            PriceRecord { date: date(2024, 1, 2), close: 110.0 },
+            PriceRecord { date: date(2024, 1, 3), close: 105.0 },
+        ];
+        let returns = compute_returns(&prices);
+        assert_eq!(returns.len(), 2);
+        assert!((returns[0].daily_return - 0.1).abs() < 1e-10);
+        assert!((returns[1].daily_return - (-5.0 / 110.0)).abs() < 1e-10);
+    }
+
+    #[test]
+    fn test_zero_price_skipped() {
+        let prices = vec![
+            PriceRecord { date: date(2024, 1, 1), close: 0.0 },
+            PriceRecord { date: date(2024, 1, 2), close: 100.0 },
+            PriceRecord { date: date(2024, 1, 3), close: 110.0 },
+        ];
+        let returns = compute_returns(&prices);
+        assert_eq!(returns.len(), 1, "should skip the return from zero-price day");
+        assert!((returns[0].daily_return - 0.1).abs() < 1e-10);
+    }
+
+    #[test]
+    fn test_single_price() {
+        let prices = vec![
+            PriceRecord { date: date(2024, 1, 1), close: 100.0 },
+        ];
+        let returns = compute_returns(&prices);
+        assert!(returns.is_empty());
+    }
+
+    #[test]
+    fn test_empty_prices() {
+        let returns = compute_returns(&[]);
+        assert!(returns.is_empty());
+    }
+}

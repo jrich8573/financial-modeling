@@ -88,12 +88,25 @@ fn parse_ff5_csv(data: &str) -> Result<Vec<(NaiveDate, f64, f64, f64, f64, f64, 
             None => continue,
         };
 
-        let mkt_rf = fields[1].parse::<f64>().unwrap_or(0.0) / 100.0;
-        let smb = fields[2].parse::<f64>().unwrap_or(0.0) / 100.0;
-        let hml = fields[3].parse::<f64>().unwrap_or(0.0) / 100.0;
-        let rmw = fields[4].parse::<f64>().unwrap_or(0.0) / 100.0;
-        let cma = fields[5].parse::<f64>().unwrap_or(0.0) / 100.0;
-        let rf = fields[6].parse::<f64>().unwrap_or(0.0) / 100.0;
+        let parsed: Vec<Option<f64>> = fields[1..=6]
+            .iter()
+            .map(|f| f.parse::<f64>().ok())
+            .collect();
+
+        if parsed.iter().any(|v| v.is_none()) {
+            eprintln!(
+                "  [WARN] Skipping FF5 row {}: unparseable field in {:?}",
+                fields[0], &fields[1..=6]
+            );
+            continue;
+        }
+
+        let mkt_rf = parsed[0].unwrap() / 100.0;
+        let smb = parsed[1].unwrap() / 100.0;
+        let hml = parsed[2].unwrap() / 100.0;
+        let rmw = parsed[3].unwrap() / 100.0;
+        let cma = parsed[4].unwrap() / 100.0;
+        let rf = parsed[5].unwrap() / 100.0;
 
         records.push((date, mkt_rf, smb, hml, rmw, cma, rf));
     }
@@ -136,7 +149,16 @@ fn parse_momentum_csv(data: &str) -> Result<Vec<(NaiveDate, f64)>> {
             None => continue,
         };
 
-        let mom = fields[1].parse::<f64>().unwrap_or(0.0) / 100.0;
+        let mom = match fields[1].parse::<f64>() {
+            Ok(v) => v / 100.0,
+            Err(_) => {
+                eprintln!(
+                    "  [WARN] Skipping momentum row {}: unparseable value '{}'",
+                    fields[0], fields[1]
+                );
+                continue;
+            }
+        };
         records.push((date, mom));
     }
 

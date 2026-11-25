@@ -10,7 +10,7 @@ env:
   BACKEND_IMAGE: ghcr.io/${{ github.repository }}/backend
   WEB_IMAGE: ghcr.io/${{ github.repository }}/web
   AWS_REGION: us-east-1
-  INSTANCE_ID: i-0d1c27c499dc5ef6a
+  INSTANCE_ID: ${{ secrets.EC2_INSTANCE_ID }}
 
 jobs:
   build-backend:

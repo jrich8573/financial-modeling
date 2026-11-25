@@ -1,5 +1,8 @@
 /target
 
+# Generated analysis output
+web/public/*.json
+
 # Terraform
 terraform/.terraform/
 terraform/*.tfstate

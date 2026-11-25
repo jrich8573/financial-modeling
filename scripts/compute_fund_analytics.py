@@ -6,12 +6,15 @@ standard deviation, management fee, fee after waiver, return over benchmark.
 """
 import json
 import math
+import os
 import sys
 from datetime import datetime
 
 import openpyxl
 
-XLSX_PATH = sys.argv[1] if len(sys.argv) > 1 else "/Users/jasonrich/Downloads/(OG13)AUM_TNA_FEES_FLOWS.xlsx"
+XLSX_PATH = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+    os.path.dirname(__file__), "..", "data", "AUM_TNA_FEES_FLOWS.xlsx"
+)
 OUTPUT_PATH = sys.argv[2] if len(sys.argv) > 2 else "web/public/fund_analytics.json"
 
 RF_ANNUAL = 0.05  # approximate risk-free rate for Sharpe
