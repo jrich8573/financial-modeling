@@ -96,6 +96,26 @@ This starts three services:
 
 The backend generates `data.json` and `dfa_data.json` into a shared volume, which nginx serves to the frontend. PostgreSQL stores the analysis results for querying.
 
+### Database TLS
+
+The backend connects over TLS according to the `sslmode` parameter in `DATABASE_URL`:
+
+| `sslmode` | Behavior |
+|-----------|----------|
+| `disable` | Plaintext only |
+| `prefer` (default) | TLS if the server supports it, otherwise plaintext |
+| `require` | TLS mandatory — connection fails if the server doesn't offer it |
+
+When TLS is used, the server certificate **and hostname** are always verified (similar to libpq's `verify-full`) against the Mozilla root store. For servers signed by a private CA (e.g. AWS RDS, self-signed), point `DATABASE_CA_CERT` at a PEM bundle:
+
+```bash
+DATABASE_URL="postgres://user:pass@mydb.xxxx.rds.amazonaws.com:5432/financial_models?sslmode=require" \
+DATABASE_CA_CERT=/etc/ssl/rds-global-bundle.pem \
+./financial-models
+```
+
+The bundled docker-compose Postgres doesn't enable SSL, so the default `prefer` falls back to plaintext there.
+
 ## CI/CD
 
 A GitHub Actions workflow (`.github/workflows/deploy-containers.yml`) automatically builds and pushes container images on every push to `main`:

@@ -1,11 +1,33 @@
-use anyhow::Result;
-use serde_json;
-use tokio_postgres::{Client, NoTls};
+use std::sync::Arc;
+
+use anyhow::{Context, Result};
+use rustls::ClientConfig;
+use rustls::pki_types::CertificateDer;
+use rustls::pki_types::pem::PemObject;
+use tokio_postgres::Client;
+use tokio_postgres_rustls::MakeRustlsConnect;
 
 use crate::types::StockAnalysis;
 
+/// Environment variable naming a PEM file of extra CA certificates to trust
+/// (e.g. the AWS RDS bundle or a self-signed server CA).
+pub const CA_CERT_ENV: &str = "DATABASE_CA_CERT";
+
+/// Connect to PostgreSQL, negotiating TLS according to the URL's `sslmode`.
+///
+/// - `sslmode=disable` — plaintext only.
+/// - `sslmode=prefer` (default) — TLS if the server offers it, else plaintext.
+/// - `sslmode=require` — TLS mandatory; the connection fails otherwise.
+///
+/// Whenever TLS is used, the server certificate and hostname are verified
+/// against the Mozilla root store plus any CAs in `$DATABASE_CA_CERT`.
 pub async fn connect(database_url: &str) -> Result<Client> {
-    let (client, connection) = tokio_postgres::connect(database_url, NoTls).await?;
+    let ca_path = std::env::var(CA_CERT_ENV).ok().filter(|p| !p.is_empty());
+    let tls = make_tls_connector(ca_path.as_deref())?;
+
+    let (client, connection) = tokio_postgres::connect(database_url, tls)
+        .await
+        .context("failed to connect to PostgreSQL")?;
 
     tokio::spawn(async move {
         if let Err(e) = connection.await {
@@ -14,6 +36,37 @@ pub async fn connect(database_url: &str) -> Result<Client> {
     });
 
     Ok(client)
+}
+
+/// Build a rustls connector trusting webpki roots plus an optional PEM CA bundle.
+fn make_tls_connector(ca_path: Option<&str>) -> Result<MakeRustlsConnect> {
+    let mut roots = rustls::RootCertStore::empty();
+    roots.extend(webpki_roots::TLS_SERVER_ROOTS.iter().cloned());
+
+    if let Some(path) = ca_path {
+        let certs = CertificateDer::pem_file_iter(path)
+            .with_context(|| format!("failed to read {CA_CERT_ENV} file {path}"))?
+            .collect::<Result<Vec<_>, _>>()
+            .with_context(|| format!("invalid PEM in {CA_CERT_ENV} file {path}"))?;
+        anyhow::ensure!(!certs.is_empty(), "no certificates found in {CA_CERT_ENV} file {path}");
+        for cert in certs {
+            roots
+                .add(cert)
+                .with_context(|| format!("invalid CA certificate in {path}"))?;
+        }
+    }
+
+    // Pin the ring provider explicitly so we never depend on process-wide
+    // provider selection (which panics if multiple providers are compiled in).
+    let config = ClientConfig::builder_with_provider(Arc::new(
+        rustls::crypto::ring::default_provider(),
+    ))
+    .with_safe_default_protocol_versions()
+    .context("failed to configure TLS protocol versions")?
+    .with_root_certificates(roots)
+    .with_no_client_auth();
+
+    Ok(MakeRustlsConnect::new(config))
 }
 
 pub async fn create_tables(client: &Client) -> Result<()> {
@@ -122,4 +175,35 @@ pub async fn insert_analyses(
     }
 
     Ok(count)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn builds_connector_with_default_roots() {
+        assert!(make_tls_connector(None).is_ok());
+    }
+
+    #[test]
+    fn builds_connector_with_custom_ca() {
+        let path = concat!(env!("CARGO_MANIFEST_DIR"), "/tests/fixtures/test-ca.pem");
+        assert!(make_tls_connector(Some(path)).is_ok());
+    }
+
+    #[test]
+    fn missing_ca_file_is_an_error() {
+        let err = make_tls_connector(Some("/nonexistent/ca.pem")).err().unwrap();
+        assert!(err.to_string().contains(CA_CERT_ENV));
+    }
+
+    #[test]
+    fn empty_ca_file_is_an_error() {
+        let dir = std::env::temp_dir().join(format!("db_tls_empty_{}", std::process::id()));
+        std::fs::write(&dir, "not a cert\n").unwrap();
+        let res = make_tls_connector(dir.to_str());
+        std::fs::remove_file(&dir).ok();
+        assert!(res.is_err());
+    }
 }
